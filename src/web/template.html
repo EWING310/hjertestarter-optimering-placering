@@ -1,0 +1,697 @@
+<title>Danmarks hjertestarter-blindspots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a working map desk - kort til venstre, prioriteret liste til højre; derefter by og land, effekt, kommuner og metode. */
+:root {
+  --paper: #F2F4F1;
+  --surface: #FBFCFA;
+  --ink: #16211D;
+  --ink-2: #4E5C57;
+  --ink-3: #6F7B77;
+  --rule: #D7DDD9;
+  --land: #E3E8E2;
+  --sea: #CFDADD;
+  --aed: #0A8754;
+  --new: #2F5BEA;
+  --upgrade: #C47F00;
+  --alert: #C2381F;
+  --cls0: #1D3557;
+  --cls1: #4A76A8;
+  --cls2: #8AAED3;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --step--1: .8125rem;
+  --step-0: .9375rem;
+  --step-1: 1.125rem;
+  --step-2: 1.5rem;
+  --step-3: 2.25rem;
+  --step-4: clamp(2.4rem, 1.6rem + 3.2vw, 3.9rem);
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0F1714; --surface: #141E1A; --ink: #E4ECE8; --ink-2: #A9B7B1; --ink-3: #85948E;
+    --rule: #28352F; --land: #1B2622; --sea: #0A1012; --aed: #2FA676; --new: #6886EE;
+    --upgrade: #B47E1C; --alert: #E2604A; --cls0: #E3ECF6; --cls1: #8FB0D6; --cls2: #3F6A99;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0F1714; --surface: #141E1A; --ink: #E4ECE8; --ink-2: #A9B7B1; --ink-3: #85948E;
+  --rule: #28352F; --land: #1B2622; --sea: #0A1012; --aed: #2FA676; --new: #6886EE;
+  --upgrade: #B47E1C; --alert: #E2604A; --cls0: #E3ECF6; --cls1: #8FB0D6; --cls2: #3F6A99;
+  color-scheme: dark;
+}
+
+/*__LEAFLET_CSS__*/
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); line-height: 1.5; }
+.wrap { max-width: 1440px; margin: 0 auto; padding-inline: clamp(16px, 3vw, 40px); padding-block: 28px 64px; display: grid; gap: 48px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: .01em; line-height: 1.02; text-wrap: balance; margin: 0; }
+h1 { font-size: var(--step-4); text-transform: uppercase; }
+h2 { font-size: var(--step-3); text-transform: uppercase; }
+h3 { font-size: var(--step-2); }
+p { margin: 0; }
+a { color: var(--new); }
+.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.eyebrow { font-family: var(--font-data); font-size: var(--step--1); color: var(--ink-2); text-transform: uppercase; letter-spacing: .08em; }
+
+/* Header */
+.masthead { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px 48px; align-items: end; }
+.title-row { display: flex; gap: 18px; align-items: center; margin-top: 10px; }
+.aed-sign { flex: none; width: 64px; height: 64px; border-radius: 10px; background: var(--aed); display: grid; place-items: center; }
+.aed-sign svg { width: 44px; height: 44px; }
+.lede { margin-top: 14px; max-width: 62ch; color: var(--ink-2); font-size: var(--step-1); }
+.figures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
+.figure { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--rule); display: grid; gap: 4px; align-content: start; }
+.figure:nth-child(odd) { border-right: 1px solid var(--rule); }
+.figure:nth-child(even) { padding-left: 16px; }
+.figure b { font-family: var(--font-display); font-size: var(--step-3); line-height: 1; font-weight: 700; }
+.figure span { color: var(--ink-2); font-size: var(--step--1); }
+.figure.alert b { color: var(--alert); }
+.figure.good b { color: var(--aed); }
+
+/* Workspace */
+.section-head { display: grid; gap: 8px; margin-bottom: 18px; max-width: 72ch; }
+.section-head p { color: var(--ink-2); }
+.desk { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 400px); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+.map-col { position: relative; min-width: 0; display: grid; grid-template-rows: auto auto 1fr auto; }
+#map { height: min(76vh, 760px); min-height: 460px; background: var(--sea); }
+.layerbar { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 10px 14px; border-bottom: 1px solid var(--rule); font-size: var(--step--1); }
+.layerbar label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; color: var(--ink-2); }
+.layerbar input { accent-color: var(--ink); }
+.notice { padding: 8px 14px; font-size: var(--step--1); background: var(--paper); border-bottom: 1px solid var(--rule); color: var(--ink-2); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 10px 14px; border-top: 1px solid var(--rule); font-size: var(--step--1); color: var(--ink-2); align-items: center; }
+.legend i { display: inline-block; vertical-align: -2px; margin-right: 6px; }
+.ramp { display: inline-flex; align-items: center; gap: 6px; }
+.ramp i { width: 90px; height: 10px; margin: 0 !important; background: linear-gradient(90deg, rgb(251,213,197), rgb(232,102,74), rgb(143,29,13)); }
+.sw-pop { width: 30px; height: 10px; background: linear-gradient(90deg, rgba(122,134,153,.12), rgba(122,134,153,.9)); }
+.shape { width: 12px; height: 12px; }
+.shape.dot { border-radius: 50%; background: var(--aed); }
+.shape.ring { border-radius: 50%; border: 2px solid var(--aed); }
+.shape.new { border-radius: 50%; background: var(--new); box-shadow: 0 0 0 2px var(--surface); }
+.shape.up { background: var(--upgrade); }
+.shape.pub { width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 12px solid var(--ink); }
+
+.panel { border-left: 1px solid var(--rule); display: grid; grid-template-rows: auto auto minmax(0, 1fr); min-width: 0; max-height: calc(min(76vh, 760px) + 132px); }
+.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--rule); }
+.tab { font: 600 var(--step--1)/1.25 var(--font-body); background: none; border: 0; border-bottom: 3px solid transparent; color: var(--ink-2); padding: 11px 10px 9px; text-align: left; cursor: pointer; display: flex; gap: 8px; align-items: center; }
+.tab + .tab { border-left: 1px solid var(--rule); }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--tabc, var(--ink)); background: var(--paper); }
+.tab:hover { color: var(--ink); }
+.tab:focus-visible, button:focus-visible, select:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--new); outline-offset: 2px; }
+.controls { display: grid; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--rule); }
+.controls p { color: var(--ink-2); font-size: var(--step--1); }
+.ctrl-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.ctrl-row label { display: grid; gap: 2px; font-size: .75rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; flex: 1 1 100px; }
+select { font: 400 var(--step--1) var(--font-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 8px; width: 100%; }
+.list { list-style: none; margin: 0; padding: 0; overflow-y: auto; min-height: 0; }
+.list li { border-bottom: 1px solid var(--rule); }
+.list button { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; padding: 9px 14px; align-items: center; }
+.list button:hover { background: var(--paper); }
+.list button:focus-visible { outline: 2px solid var(--new); outline-offset: -2px; }
+.rank { font: 500 var(--step--1) var(--font-data); color: var(--ink-3); }
+.item-t { display: block; font-weight: 600; font-size: var(--step--1); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item-s { display: block; font-size: .75rem; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item-m { text-align: right; font: 500 var(--step--1) var(--font-data); }
+.item-m small { display: block; font-size: .7rem; color: var(--ink-3); font-family: var(--font-body); }
+.chip { display: inline-block; font-size: .68rem; padding: 0 5px; border-radius: 3px; border: 1px solid currentColor; margin-right: 4px; vertical-align: 1px; font-weight: 500; }
+.chip.up { color: var(--upgrade); }
+.chip.k0 { color: var(--cls0); } .chip.k1 { color: var(--cls1); } .chip.k2 { color: var(--cls2); }
+
+/* Leaflet theming */
+.leaflet-container { font-family: var(--font-body); background: var(--sea); }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface); color: var(--ink); box-shadow: 0 6px 24px rgba(0,0,0,.18); }
+.leaflet-popup-content { margin: 12px 14px; font-size: var(--step--1); line-height: 1.45; min-width: 230px; }
+.leaflet-container a.leaflet-popup-close-button { color: var(--ink-3); }
+.leaflet-bar a { background: var(--surface); color: var(--ink); border-bottom-color: var(--rule); }
+.leaflet-control-attribution { background: color-mix(in srgb, var(--surface) 80%, transparent) !important; color: var(--ink-3); font-size: 10px; }
+.leaflet-control-attribution a { color: var(--ink-2); }
+.pop h4 { font: 700 var(--step-1) var(--font-display); margin: 0 0 4px; text-transform: uppercase; letter-spacing: .02em; }
+.pop dl { display: grid; grid-template-columns: auto auto; gap: 2px 14px; margin: 8px 0; }
+.pop dt { color: var(--ink-2); }
+.pop dd { margin: 0; text-align: right; font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.pop .rec { padding: 6px 8px; border-radius: 4px; background: var(--paper); margin-top: 6px; }
+.mk { display: grid; place-items: center; font: 600 10px/1 var(--font-data); color: #fff; }
+.mk-new { background: var(--new); border-radius: 50%; box-shadow: 0 0 0 2px var(--surface); }
+.mk-up { background: var(--upgrade); box-shadow: 0 0 0 2px var(--surface); }
+.mk-pub { width: 0 !important; height: 0 !important; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 14px solid var(--ink); background: none; }
+
+/* By og land */
+.fair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.mix { display: grid; gap: 14px; }
+.mix-row { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 12px; align-items: center; font-size: var(--step--1); }
+.mix-row > span:first-child { color: var(--ink-2); }
+.mix-bar { display: flex; height: 22px; gap: 2px; }
+.mix-bar i { display: block; height: 100%; min-width: 2px; }
+.mix-bar i:first-child { border-radius: 4px 0 0 4px; }
+.mix-bar i:last-child { border-radius: 0 4px 4px 0; }
+.mix-vals { grid-column: 2; display: flex; gap: 14px; font: 400 .75rem var(--font-data); color: var(--ink-2); margin-top: -8px; }
+.key { display: flex; gap: 16px; flex-wrap: wrap; font-size: var(--step--1); color: var(--ink-2); }
+.key i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+/* Effect + tables */
+.split { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.chart { position: relative; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { fill: var(--ink-2); font: 400 11px var(--font-data); }
+.chart .lbl { fill: var(--ink); font: 600 12px var(--font-body); }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 8px 10px; font-size: var(--step--1); box-shadow: 0 4px 16px rgba(0,0,0,.12); min-width: 200px; }
+.tip b { font-family: var(--font-data); }
+.chart-legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: var(--step--1); color: var(--ink-2); margin-bottom: 8px; }
+.chart-legend i { display: inline-block; width: 18px; height: 0; border-top: 2px solid var(--new); vertical-align: 4px; margin-right: 6px; }
+.chart-legend i.dash { border-top-style: dashed; border-color: var(--ink-3); }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: var(--step--1); }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-weight: 600; color: var(--ink-2); border-bottom: 2px solid var(--ink); position: sticky; top: 0; background: var(--paper); z-index: 1; }
+th button { all: unset; cursor: pointer; }
+th[aria-sort="descending"] button::after { content: " ↓"; }
+th[aria-sort="ascending"] button::after { content: " ↑"; }
+td { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+td:first-child { font-family: var(--font-body); font-weight: 500; }
+.kom-wrap { max-height: 560px; overflow: auto; border-top: 1px solid var(--rule); }
+.bar { display: inline-grid; grid-template-columns: 70px 3.2em; gap: 8px; align-items: center; }
+.bar span { height: 8px; background: var(--rule); border-radius: 2px; overflow: hidden; display: block; }
+.bar span i { display: block; height: 100%; background: var(--aed); border-radius: 0 2px 2px 0; }
+.slow { color: var(--alert); }
+
+/* Method */
+.method { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 36px; }
+.method h3 { font-size: var(--step-1); text-transform: uppercase; margin-bottom: 8px; letter-spacing: .03em; }
+.method li { color: var(--ink-2); font-size: var(--step--1); }
+.method ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+footer { color: var(--ink-3); font-size: var(--step--1); border-top: 1px solid var(--rule); padding-top: 16px; }
+
+@media (max-width: 1080px) {
+  .masthead, .split, .fair { grid-template-columns: minmax(0, 1fr); }
+  .desk { grid-template-columns: minmax(0, 1fr); }
+  .panel { border-left: 0; border-top: 1px solid var(--rule); max-height: 640px; }
+  .method { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  #map { height: 64vh; min-height: 380px; }
+  .figure b { font-size: var(--step-2); }
+  .title-row { align-items: flex-start; }
+  .aed-sign { width: 48px; height: 48px; }
+  .aed-sign svg { width: 32px; height: 32px; }
+  .mix-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .mix-vals { grid-column: 1; margin-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">Dansk Hjertestarterregister · DST befolkning 2026K4 · fremskrevet til 2036</p>
+      <div class="title-row">
+        <div class="aed-sign" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><path fill="#fff" d="M24 42 8.6 27.3C4.3 23.2 4 16.4 8 12.1c3.9-4.2 10.5-4.4 14.6-.4L24 13l1.4-1.3c4.1-4 10.7-3.8 14.6.4 4 4.3 3.7 11.1-.6 15.2Z"/><path fill="#0A8754" d="m26.5 15-8 13h6l-2.5 10 8.5-14h-6.2z"/></svg>
+        </div>
+        <h1>Hjertestarternes blinde vinkler</h1>
+      </div>
+      <p class="lede">Hvor lang tid går der, før en person med hjertestop får det første stød, og hvor bør de næste hjertestartere stå? Alle borgere måles med samme målestok, og forslagene fordeles mellem by og land i samme forhold som hjertestoppene sker.</p>
+    </div>
+    <div class="figures" id="figures"></div>
+  </header>
+
+  <section aria-labelledby="desk-h">
+    <div class="section-head">
+      <h2 id="desk-h">Kort og prioriteret liste</h2>
+      <p>Farven viser den forventede tid til første stød, hvor folk bor: den korteste af at hente nærmeste døgntilgængelige hjertestarter og ambulancens ankomst. Vælg en liste til højre og klik på et sted for at zoome ind.</p>
+    </div>
+    <div class="desk">
+      <div class="map-col">
+        <div class="layerbar" role="group" aria-label="Kortlag">
+          <label><input type="checkbox" id="lyr-time" checked> Tid til første stød</label>
+          <label><input type="checkbox" id="lyr-pop"> Befolkning</label>
+          <label><input type="checkbox" id="lyr-aed" checked> Eksisterende hjertestartere</label>
+          <label><input type="checkbox" id="lyr-kom" checked> Kommunegrænser</label>
+          <label><input type="checkbox" id="lyr-ortho"> Ortofoto</label>
+        </div>
+        <p class="notice" id="ortho-note" hidden></p>
+        <div id="map" role="region" aria-label="Kort over Danmark med tid til første stød og forslag"></div>
+        <div class="legend">
+          <span class="ramp">≤4 min <i></i> 11+ min</span>
+          <span><i class="shape dot"></i>Døgnåben</span>
+          <span><i class="shape ring"></i>Aflåst skab, kode via 112</span>
+          <span><i class="shape up"></i>Åbningstid / utilgængelig</span>
+          <span><i class="shape new"></i>Ny placering</span>
+          <span><i class="shape pub"></i>Offentligt sted uden hjertestarter</span>
+        </div>
+      </div>
+      <aside class="panel" aria-label="Prioriterede forslag">
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" id="tab-new" aria-selected="true" style="--tabc:var(--new)"><i class="shape new"></i>Nye placeringer</button>
+          <button class="tab" role="tab" id="tab-up" aria-selected="false" style="--tabc:var(--upgrade)"><i class="shape up"></i>Opgradér</button>
+          <button class="tab" role="tab" id="tab-pub" aria-selected="false" style="--tabc:var(--ink)"><i class="shape pub"></i>Offentlige steder</button>
+        </div>
+        <div class="controls">
+          <p id="tab-desc"></p>
+          <div class="ctrl-row">
+            <label for="sel-kom">Kommune<select id="sel-kom"><option value="">Hele landet</option></select></label>
+            <label for="sel-kl">Område<select id="sel-kl"><option value="">By og land</option></select></label>
+            <label for="sel-n">Vis på kort<select id="sel-n"><option>50</option><option>100</option><option selected>250</option><option>500</option><option>1000</option><option>2000</option></select></label>
+          </div>
+        </div>
+        <ol class="list" id="list" aria-live="polite"></ol>
+      </aside>
+    </div>
+  </section>
+
+  <section aria-labelledby="fair-h">
+    <div class="section-head">
+      <h2 id="fair-h">By og land</h2>
+      <p>Områderne følger EU's urbaniseringsgrad (DEGURBA): bykerner, mindre byer og forstæder samt landdistrikter. De nye hjertestartere fordeles i samme forhold som de forventede hjertestop i 2036. Den tidligere metode, der kun talte beboere inden for 100 m, lagde næsten alle forslag i de tætteste bykerner.</p>
+    </div>
+    <div class="fair">
+      <div class="mix" id="mix"></div>
+      <div class="scroll"><table id="class-table"></table></div>
+    </div>
+  </section>
+
+  <section class="split" aria-labelledby="eff-h">
+    <div>
+      <div class="section-head">
+        <h2 id="eff-h">Effekt</h2>
+        <p>Forventede ekstra overlevere pr. år i 2036, når forslagene etableres i rækkefølge. Den stiplede kurve er den samme optimering uden krav om fordeling mellem by og land; forskellen er prisen for den lige fordeling.</p>
+      </div>
+      <div class="chart-legend"><span><i></i>Med fordeling by/land</span><span><i class="dash"></i>Uden fordelingskrav</span></div>
+      <div class="chart" id="curve"></div>
+    </div>
+    <div>
+      <div class="section-head">
+        <h3>Første forslag fordelt</h3>
+        <p>Antal forslag pr. område og samlet effekt.</p>
+      </div>
+      <div class="scroll"><table id="milestones"></table></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="kom-h">
+    <div class="section-head">
+      <h2 id="kom-h">Kommuner</h2>
+      <p>Sorteret efter median tid til første stød for kommunens beboere. Klik på en kolonneoverskrift for at sortere og på et kommunenavn for at filtrere kort og liste.</p>
+    </div>
+    <div class="kom-wrap"><table id="kom-table"></table></div>
+  </section>
+
+  <section aria-labelledby="met-h">
+    <div class="section-head"><h2 id="met-h">Metode og forbehold</h2></div>
+    <div class="method">
+      <div>
+        <h3>Data</h3>
+        <ul>
+          <li>Hjertestartere: alle <span class="num" id="m-aeds"></span> offentligt viste registreringer i <a href="https://www.hjertestarter.dk/find-hjertestarter" target="_blank" rel="noopener">Dansk Hjertestarterregister</a>, hentet 19.11.2026.</li>
+          <li>Befolkning: GHSL GHS-POP 2025 (100 m), kalibreret pr. kommune til Danmarks Statistik FOLK1A. Andel 60+ fra Meta HRSL 2020.</li>
+          <li>Fremtid: DST befolkningsfremskrivning FRKM126 (2026 → 2036).</li>
+          <li>By og land: GHSL-SMOD 2025, EU/FN's urbaniseringsgrad (DEGURBA) på 1 km.</li>
+          <li>Værtssteder: OpenStreetMap. Ortofoto: Esri World Imagery.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Model</h3>
+        <ul>
+          <li>Ca. 5.000 hjertestop uden for hospital pr. år fordeles på beboerne; personer 60+ vægtes 7 gange højere.</li>
+          <li>Tid til første stød = den korteste af (2 min + hente og vende tilbage fra nærmeste døgntilgængelige hjertestarter, 110 m/min, ruteomvej 1,3) og ambulancens responstid.</li>
+          <li>Overlevelse ved stødbar rytme følger Valenzuela et al. 1997. 25 % af hjertestop antages stødbare.</li>
+          <li>Hvert forslag vælges, så den samlede overlevelse stiger mest. Forslagene fordeles mellem by, mindre by og land efter andelen af hjertestop, så ethvert top-N udsnit har samme fordeling.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Forbehold</h3>
+        <ul>
+          <li>Ambulancetiden er en antagelse pr. område (<span id="m-ems"></span>), da responstider pr. adresse ikke er offentlige.</li>
+          <li>Afstande er luftlinje gange en fast omvejsfaktor. Modellen antager, at nogen henter hjertestarteren, når den er hurtigere end ambulancen.</li>
+          <li>Befolkningen er bopælsbefolkning; steder med mange besøgende vises særskilt.</li>
+          <li>Et forslag er et søgeområde på ca. 100 × 100 m. Den endelige placering kræver lokal vurdering.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <footer>Kode og data: <a href="https://github.com/EWING310/hjertestarter-optimering-placering" target="_blank" rel="noopener">github.com/EWING310/hjertestarter-optimering-placering</a>. Kortdata © OpenStreetMap-bidragydere, GHSL © EU JRC, Danmarks Statistik, Esri.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const DATA = /*__DATA__*/null;
+const PAGES_URL = "https://ewing310.github.io/hjertestarter-optimering-placering/";
+const fmt = new Intl.NumberFormat("da-DK");
+const fmt1 = new Intl.NumberFormat("da-DK", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const fmt2 = new Intl.NumberFormat("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmt3 = new Intl.NumberFormat("da-DK", { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const tok = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const $ = (id) => document.getElementById(id);
+const S = DATA.summary;
+const CL = DATA.classes;
+const classRow = (name) => S.by_og_land.find((r) => r.klasse === name);
+const kIndex = (name) => CL.indexOf(name);
+
+/* ---------- Header figures ---------- */
+function renderFigures() {
+  const by = classRow(CL[0]), land = classRow(CL[2]);
+  const m100 = S.effekt_med_kvote["100"], m2000 = S.effekt_med_kvote["2000"], f2000 = S.effekt_uden_kvote["2000"];
+  const cost = 100 * (1 - m2000.ekstra_overlevere_pr_aar_2036 / f2000.ekstra_overlevere_pr_aar_2036);
+  const items = [
+    ["alert", fmt1.format(land.median_tid_til_stoed_min) + " min", `median tid til første stød på landet, mod ${fmt1.format(by.median_tid_til_stoed_min)} min i bykernerne`],
+    ["alert", fmt.format(Math.round(land.daekning_500m_pct)) + " %", `af beboerne på landet har en døgntilgængelig hjertestarter inden for 500 m, mod ${fmt.format(Math.round(by.daekning_500m_pct))} % i bykernerne`],
+    ["", CL.map((c) => m100.fordeling[c]).join(" · "), "af de første 100 forslag ligger i by · mindre by · land, samme fordeling som hjertestoppene"],
+    ["good", fmt1.format(cost).replace("-", "") + " %", `lavere effekt end uden fordelingskrav (+${fmt1.format(m2000.ekstra_overlevere_pr_aar_2036)} overlevere/år ved 2.000 nye)`],
+  ];
+  $("figures").innerHTML = items.map(([cls, b, s]) => `<div class="figure ${cls}"><b class="num">${b}</b><span>${s}</span></div>`).join("");
+  $("m-aeds").textContent = fmt.format(S.hjertestartere_registreret);
+  $("m-ems").textContent = CL.map((c, i) => `${c.toLowerCase()} ${fmt.format(DATA.ems[i])} min`).join(", ");
+}
+
+/* ---------- Map ---------- */
+const DK = [[54.53, 7.95], [57.78, 15.25]];
+const map = L.map("map", { preferCanvas: true, minZoom: 6, maxZoom: 19, zoomSnap: 0.5, maxBounds: [[53.8, 6.5], [58.4, 16.2]] }).fitBounds(DK);
+map.attributionControl.setPrefix(false).addAttribution("© OpenStreetMap · GHSL · DST · Hjertestarterregistret");
+map.createPane("ortho").style.zIndex = 250;
+const canvas = L.canvas({ padding: 0.3 });
+const ortho = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+  pane: "ortho", maxZoom: 19, maxNativeZoom: 19, attribution: "Ortofoto © Esri, Maxar, Earthstar Geographics",
+});
+let orthoLoaded = false;
+ortho.on("tileload", () => { orthoLoaded = true; $("ortho-note").hidden = true; });
+ortho.on("tileerror", () => {
+  if (orthoLoaded) return;
+  const note = $("ortho-note");
+  note.innerHTML = `Ortofotoet kan ikke hentes i denne visning, fordi eksterne kortbilleder er blokeret. Åbn kortet på <a href="${PAGES_URL}" target="_blank" rel="noopener">GitHub Pages</a> for at se det.`;
+  note.hidden = false;
+});
+let outlineLayer;
+const popLayer = L.imageOverlay(DATA.raster.png, DATA.raster.bounds, { opacity: 0.8, interactive: false });
+const timeLayer = L.imageOverlay(DATA.accessRaster.png, DATA.accessRaster.bounds, { opacity: 0.9, interactive: false }).addTo(map);
+const aedLayer = L.layerGroup().addTo(map);
+const cellLayer = L.layerGroup().addTo(map);
+const siteLayer = L.layerGroup().addTo(map);
+const siteMarkers = new Map();
+
+function buildBase() {
+  if (outlineLayer) outlineLayer.remove();
+  const photo = $("lyr-ortho").checked;
+  if (!$("lyr-kom").checked && photo) return;
+  outlineLayer = L.geoJSON(DATA.outlines, {
+    interactive: false,
+    style: () => ({
+      color: photo ? "#ffffff" : tok("--ink-3"), weight: photo ? 1 : 0.7, opacity: $("lyr-kom").checked ? (photo ? 0.8 : 0.55) : 0,
+      fillColor: tok("--land"), fillOpacity: photo ? 0 : 1,
+    }),
+  }).addTo(map);
+  outlineLayer.bringToBack();
+}
+
+const AED_CAT = ["Døgnåben", "Aflåst skab – kode via 112", "Åbningstid", "Utilgængelig"];
+const inView = (lat, lon, b) => lat > b.getSouth() && lat < b.getNorth() && lon > b.getWest() && lon < b.getEast();
+
+function drawAeds() {
+  aedLayer.clearLayers();
+  if (!$("lyr-aed").checked || map.getZoom() < 11.5) return;
+  const b = map.getBounds().pad(0.2), A = DATA.aeds, z = map.getZoom();
+  const colors = [tok("--aed"), tok("--aed"), tok("--upgrade"), tok("--ink-3")];
+  for (let i = 0; i < A.lat.length; i++) {
+    if (!inView(A.lat[i], A.lon[i], b)) continue;
+    const k = A.k[i];
+    if (z >= 14.5 && k <= 1) {
+      L.circle([A.lat[i], A.lon[i]], { renderer: canvas, radius: 100, stroke: false, fillColor: tok("--aed"), fillOpacity: 0.12, interactive: false }).addTo(aedLayer);
+    }
+    L.circleMarker([A.lat[i], A.lon[i]], {
+      renderer: canvas, radius: z >= 14 ? 5 : 3.5, weight: k === 1 ? 2 : 1, color: k === 1 ? colors[k] : tok("--surface"),
+      fillColor: colors[k], fillOpacity: k === 1 ? 0 : 1,
+    }).bindTooltip(AED_CAT[k]).addTo(aedLayer);
+  }
+}
+
+function rampColor(t) {
+  const u = Math.max(0, Math.min(1, (t - DATA.accessRaster.tmin) / (DATA.accessRaster.tmax - DATA.accessRaster.tmin)));
+  const stops = [[0, [251, 213, 197]], [0.5, [232, 102, 74]], [1, [143, 29, 13]]];
+  const [a, b] = u <= 0.5 ? [stops[0], stops[1]] : [stops[1], stops[2]];
+  const f = (u - a[0]) / (b[0] - a[0]);
+  return `rgb(${a[1].map((v, i) => Math.round(v + f * (b[1][i] - v))).join(",")})`;
+}
+
+function drawCells() {
+  cellLayer.clearLayers();
+  if (!$("lyr-time").checked || map.getZoom() < 13) return;
+  const b = map.getBounds().pad(0.1), C = DATA.cells;
+  for (let i = 0; i < C.lat.length; i++) {
+    if (!inView(C.lat[i], C.lon[i], b)) continue;
+    const dLat = 125 / 111320, dLon = 125 / (111320 * Math.cos(C.lat[i] * Math.PI / 180));
+    L.rectangle([[C.lat[i] - dLat, C.lon[i] - dLon], [C.lat[i] + dLat, C.lon[i] + dLon]], {
+      renderer: canvas, weight: 0, fillColor: rampColor(C.t[i]), fillOpacity: 0.01,
+    }).bindPopup(`<div class="pop"><h4>250 × 250 m · ${esc(CL[C.k[i]])}</h4><dl>
+      <dt>Beboere</dt><dd>${fmt.format(C.pop[i])}</dd>
+      <dt>Heraf 60+</dt><dd>${fmt.format(C.pop60[i])}</dd>
+      <dt>Afstand til døgntilg. hjertestarter</dt><dd>${fmt.format(C.d[i])} m</dd>
+      <dt>Tid til første stød</dt><dd>${fmt1.format(C.t[i])} min</dd>
+      <dt>Antaget ambulancetid</dt><dd>${fmt.format(DATA.ems[C.k[i]])} min</dd></dl></div>`).addTo(cellLayer);
+  }
+}
+
+/* ---------- Tabs & list ---------- */
+const klChip = (kl) => `<span class="chip k${kIndex(kl)}">${esc(kl)}</span>`;
+const TABS = {
+  new: {
+    rows: () => DATA.proposals, cls: "mk-new", size: 18,
+    desc: "Nye døgnåbne hjertestartere i prioriteret rækkefølge. Hvert forslag giver flest ekstra overlevere ud fra kortere tid til første stød. By, mindre by og land får forslag i samme forhold som hjertestoppene.",
+    title: (d) => d.type === "Bolig" ? (d.kl === CL[2] ? "Centralt i bebyggelsen" : "Boligområde") : d.host,
+    sub: (d) => `${d.kom} · ${d.type === "Bolig" ? "udendørs skab" : d.type}`,
+    metric: (d) => [fmt.format(d.pop), "beboere hurtigere"],
+    chip: (d) => klChip(d.kl) + (d.conv ? '<span class="chip up">opgradér</span>' : ""),
+  },
+  up: {
+    rows: () => DATA.conversions, cls: "mk-up", size: 16,
+    desc: "Hjertestartere der findes i dag, men kun har åbningstid eller står som utilgængelige. Et udendørs skab eller en genaktivering er billigere end en ny hjertestarter. Samme prioritering og fordeling som nye placeringer.",
+    title: (d) => d.adg === "åbningstid" ? "Har i dag åbningstid" : "Står som utilgængelig",
+    sub: (d) => d.kom, metric: (d) => [fmt.format(d.pop), "beboere hurtigere"], chip: (d) => klChip(d.kl),
+  },
+  pub: {
+    rows: () => DATA.public.map((d, i) => ({ ...d, r: i + 1 })), cls: "mk-pub", size: 16,
+    desc: "Stationer, indkøbscentre, skoler og idrætsanlæg med mange besøgende, hvor ingen hjertestarter er registreret inden for 100 m. 100–150 m kan skyldes, at punktet er bygningens midte.",
+    title: (d) => d.name, sub: (d) => `${d.cat}${d.by ? " · " + d.by : ""} · ${fmt.format(d.d)} m til nærmeste`,
+    metric: (d) => [fmt.format(d.pop), "beboere ≤500 m"], chip: (d) => klChip(d.kl),
+  },
+};
+let active = "new";
+
+function popupHtml(tab, d) {
+  const gm = `https://www.google.com/maps?q=${d.lat},${d.lon}`;
+  if (tab === "pub") {
+    return `<div class="pop"><h4>${esc(d.name)}</h4><div>${esc(d.cat)} · ${esc(d.kom)} · ${esc(d.kl)}</div><dl>
+      <dt>Nærmeste hjertestarter</dt><dd>${fmt.format(d.d)} m</dd><dt>Beboere inden for 500 m</dt><dd>${fmt.format(d.pop)}</dd></dl>
+      <a href="${gm}" target="_blank" rel="noopener">Åbn i Google Maps</a></div>`;
+  }
+  const head = tab === "new" ? `Forslag #${d.r}` : `Opgradering #${d.r}`;
+  const sub = tab === "new" ? ` (nr. ${d.rk} i ${esc(d.kl.toLowerCase())})` : "";
+  const host = tab === "up" ? `Eksisterende hjertestarter, ${d.adg === "åbningstid" ? "har åbningstid" : "står som utilgængelig"}`
+    : d.type === "Bolig" ? "Boligområde: udendørs skab, opgang eller fælleshus" : `${esc(d.host)} (${esc(d.type)})`;
+  const rec = tab === "up" ? "Gør hjertestarteren døgntilgængelig (udendørs skab eller kode via 112) eller genaktivér registreringen."
+    : d.conv ? "Opgradér den eksisterende hjertestarter, der står inden for 75 m, til døgnadgang." : "Ny døgnåben hjertestarter i udendørs skab.";
+  return `<div class="pop"><h4>${head}${sub}</h4><div>${esc(d.kom)} · ${esc(d.kl)}<br>${host}${d.addr ? "<br>" + esc(d.addr) : ""}</div><dl>
+    <dt>Beboere med kortere tid</dt><dd>${fmt.format(d.pop)}</dd>
+    ${d.pop60 !== undefined ? `<dt>Heraf 60+</dt><dd>${fmt.format(d.pop60)}</dd>` : ""}
+    ${d.n100 !== undefined ? `<dt>Nye inden for 100 m</dt><dd>${fmt.format(d.n100)}</dd>` : ""}
+    <dt>Tid til stød i dag (gns.)</dt><dd>${fmt1.format(d.tb)} min</dd>
+    <dt>Ekstra overlevere/år, 2036</dt><dd>${fmt3.format(d.g36)}</dd>
+    <dt>Over 10 år</dt><dd>≈ ${fmt2.format(d.g36 * 10)}</dd></dl>
+    <div class="rec">${rec}</div><p style="margin-top:8px"><a href="${gm}" target="_blank" rel="noopener">Åbn i Google Maps</a></p></div>`;
+}
+
+function filteredRows() {
+  const kom = $("sel-kom").value, kl = $("sel-kl").value;
+  return TABS[active].rows().filter((d) => (!kom || d.kom === kom) && (!kl || d.kl === kl));
+}
+
+function drawSites() {
+  siteLayer.clearLayers();
+  siteMarkers.clear();
+  const t = TABS[active], n = +$("sel-n").value, showNum = map.getZoom() >= 12 && active !== "pub";
+  filteredRows().slice(0, n).forEach((d) => {
+    const icon = L.divIcon({ className: `mk ${t.cls}`, html: showNum && d.r < 1000 ? `<span>${d.r}</span>` : "", iconSize: [t.size, t.size] });
+    const m = L.marker([d.lat, d.lon], { icon, keyboard: false, riseOnHover: true, zIndexOffset: 2000 - d.r }).bindPopup(popupHtml(active, d), { maxWidth: 310 });
+    m.addTo(siteLayer);
+    siteMarkers.set(d.r, m);
+  });
+}
+
+function renderList() {
+  const t = TABS[active];
+  $("tab-desc").textContent = t.desc;
+  const rows = filteredRows().slice(0, 300);
+  $("list").innerHTML = rows.length ? rows.map((d) => {
+    const [v, u] = t.metric(d);
+    return `<li><button type="button" data-r="${d.r}"><span class="rank">#${d.r}</span><span style="min-width:0"><span class="item-t">${esc(t.title(d))}</span><span class="item-s">${t.chip(d)}${esc(t.sub(d))}</span></span><span class="item-m">${v}<small>${u}</small></span></button></li>`;
+  }).join("") : `<li style="padding:14px;color:var(--ink-2)">Ingen forslag med dette filter.</li>`;
+}
+
+$("list").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-r]");
+  if (!btn) return;
+  const r = +btn.dataset.r;
+  const rows = filteredRows();
+  const d = rows.find((x) => x.r === r);
+  if (!d) return;
+  if (rows.indexOf(d) >= +$("sel-n").value) { $("sel-n").value = "2000"; drawSites(); }
+  map.flyTo([d.lat, d.lon], 16, { duration: 0.8 });
+  map.once("moveend", () => siteMarkers.get(r)?.openPopup());
+  $("map").scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+function setTab(name) {
+  active = name;
+  document.querySelectorAll(".tab").forEach((b) => b.setAttribute("aria-selected", String(b.id === "tab-" + name)));
+  renderList();
+  drawSites();
+}
+document.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () => setTab(b.id.slice(4))));
+
+function zoomToKommune(kom) {
+  if (!kom) { map.fitBounds(DK); return; }
+  const f = DATA.outlines.features.find((x) => x.properties.kommune === kom);
+  if (f) map.fitBounds(L.geoJSON(f).getBounds(), { padding: [20, 20] });
+}
+$("sel-kom").addEventListener("change", () => { renderList(); drawSites(); zoomToKommune($("sel-kom").value); });
+$("sel-kl").addEventListener("change", () => { renderList(); drawSites(); });
+$("sel-n").addEventListener("change", drawSites);
+$("lyr-pop").addEventListener("change", (e) => (e.target.checked ? popLayer.addTo(map) : popLayer.remove()));
+$("lyr-time").addEventListener("change", (e) => { e.target.checked ? timeLayer.addTo(map) : timeLayer.remove(); drawCells(); });
+$("lyr-kom").addEventListener("change", buildBase);
+$("lyr-aed").addEventListener("change", drawAeds);
+$("lyr-ortho").addEventListener("change", (e) => {
+  if (e.target.checked) { ortho.addTo(map); } else { ortho.remove(); $("ortho-note").hidden = true; }
+  buildBase();
+});
+let lastZoomBand = null;
+map.on("moveend", () => {
+  drawAeds(); drawCells();
+  const band = map.getZoom() >= 12;
+  if (band !== lastZoomBand) { lastZoomBand = band; drawSites(); }
+});
+
+/* ---------- By og land ---------- */
+function renderFairness() {
+  const share = CL.map((c) => classRow(c).andel_af_hjertestop_pct);
+  const fair = S.effekt_med_kvote["500"].fordeling, old = S.gammel_metode_fordeling["500"] || {};
+  const rows = [
+    ["Hjertestop i 2036", share],
+    ["Ny metode, top 500", CL.map((c) => (100 * fair[c]) / 500)],
+    ["Tidligere metode, top 500", CL.map((c) => (100 * (old[c] || 0)) / 500)],
+  ];
+  $("mix").innerHTML = `<div class="key">${CL.map((c, i) => `<span><i style="background:var(--cls${i})"></i>${esc(c)}</span>`).join("")}</div>` +
+    rows.map(([label, vals]) => `<div class="mix-row"><span>${label}</span><div class="mix-bar" role="img" aria-label="${label}: ${CL.map((c, i) => `${c} ${fmt.format(Math.round(vals[i]))} %`).join(", ")}">${
+      vals.map((v, i) => v > 0 ? `<i style="width:${v}%;background:var(--cls${i})" title="${CL[i]}: ${fmt1.format(v)} %"></i>` : "").join("")
+    }</div><div class="mix-vals">${vals.map((v, i) => `<span>${esc(CL[i])} ${fmt.format(Math.round(v))} %</span>`).join("")}</div></div>`).join("");
+  const metrics = [
+    ["Indbyggere", (r) => fmt.format(Math.round(r.befolkning / 1000)) + " t."],
+    ["Andel af hjertestop 2036", (r) => fmt1.format(r.andel_af_hjertestop_pct) + " %"],
+    ["Median afstand til døgntilg. hjertestarter", (r) => fmt.format(Math.round(r.median_afstand_m)) + " m"],
+    ["Bor ≤100 m fra en", (r) => fmt1.format(r.daekning_100m_pct) + " %"],
+    ["Bor ≤500 m fra en", (r) => fmt1.format(r.daekning_500m_pct) + " %"],
+    ["Antaget ambulancetid", (r, i) => fmt.format(DATA.ems[i]) + " min"],
+    ["Median tid til første stød", (r) => fmt1.format(r.median_tid_til_stoed_min) + " min"],
+    ["Overlevelse ved stødbar rytme", (r) => fmt1.format(r.overlevelse_stoedbar_pct) + " %"],
+  ];
+  $("class-table").innerHTML = `<thead><tr><th></th>${CL.map((c) => `<th scope="col">${esc(c)}</th>`).join("")}</tr></thead><tbody>${
+    metrics.map(([label, f]) => `<tr><td>${label}</td>${CL.map((c, i) => `<td>${f(classRow(c), i)}</td>`).join("")}</tr>`).join("")
+  }</tbody>`;
+}
+
+/* ---------- Effect curve ---------- */
+function renderCurve() {
+  const host = $("curve");
+  const W = 640, H = 280, m = { l: 46, r: 16, t: 14, b: 34 };
+  const y1 = DATA.curve, y2 = DATA.curveFree, n = y1.length;
+  const ymax = Math.ceil(Math.max(...y1, ...y2) / 2) * 2;
+  const sx = (i) => m.l + (i / n) * (W - m.l - m.r), sy = (v) => H - m.b - (v / ymax) * (H - m.t - m.b);
+  const path = (arr) => "M" + sx(0) + "," + sy(0) + arr.map((v, i) => `L${sx(i + 1).toFixed(1)},${sy(v).toFixed(1)}`).join("");
+  const yt = []; for (let v = 0; v <= ymax; v += 2) yt.push(v);
+  const xt = [0, 250, 500, 1000, 1500, 2000];
+  const marks = [100, 500, 1000, 2000];
+  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Kumulerede ekstra overlevere pr. år som funktion af antal nye hjertestartere">
+    ${yt.map((v) => `<line x1="${m.l}" x2="${W - m.r}" y1="${sy(v)}" y2="${sy(v)}" stroke="var(--rule)" stroke-width="1"/><text x="${m.l - 8}" y="${sy(v) + 4}" text-anchor="end">${v}</text>`).join("")}
+    ${xt.map((v) => `<text x="${sx(v)}" y="${H - m.b + 18}" text-anchor="middle">${fmt.format(v)}</text>`).join("")}
+    <text x="${W - m.r}" y="${H - 2}" text-anchor="end">antal nye hjertestartere</text>
+    <path d="${path(y2)}" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-dasharray="5 4"/>
+    <path d="${path(y1)}" fill="none" stroke="var(--new)" stroke-width="2"/>
+    ${marks.map((k) => `<circle cx="${sx(k)}" cy="${sy(y1[k - 1])}" r="4.5" fill="var(--new)" stroke="var(--surface)" stroke-width="2"/><text class="lbl" x="${sx(k) - 6}" y="${sy(y1[k - 1]) - 10}" text-anchor="end">+${fmt1.format(y1[k - 1])}</text>`).join("")}
+    <line id="cx" x1="0" x2="0" y1="${m.t}" y2="${H - m.b}" stroke="var(--ink-3)" stroke-width="1" visibility="hidden"/>
+    <rect x="${m.l}" y="${m.t}" width="${W - m.l - m.r}" height="${H - m.t - m.b}" fill="transparent" id="hit"/>
+  </svg><div class="tip" id="tip" hidden></div>`;
+  const svg = host.querySelector("svg"), tip = $("tip"), cx = svg.querySelector("#cx");
+  const pops = DATA.proposals.reduce((acc, d) => (acc.push((acc.at(-1) ?? 0) + d.pop), acc), []);
+  svg.querySelector("#hit").addEventListener("pointermove", (e) => {
+    const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+    const i = Math.max(1, Math.min(n, Math.round(((p.x - m.l) / (W - m.l - m.r)) * n)));
+    cx.setAttribute("x1", sx(i)); cx.setAttribute("x2", sx(i)); cx.setAttribute("visibility", "visible");
+    tip.hidden = false;
+    tip.innerHTML = `<div><b>${fmt.format(i)}</b> nye hjertestartere</div><div>+<b>${fmt2.format(y1[i - 1])}</b> overlevere/år med fordeling</div><div>+<b>${fmt2.format(y2[i - 1])}</b> uden fordelingskrav</div><div>+<b>${fmt.format(pops[i - 1])}</b> beboere får kortere tid</div>`;
+    const box = host.getBoundingClientRect();
+    tip.style.left = Math.max(0, Math.min(e.clientX - box.left + 14, box.width - tip.offsetWidth - 4)) + "px";
+    tip.style.top = Math.max(0, e.clientY - box.top - 80) + "px";
+  });
+  svg.querySelector("#hit").addEventListener("pointerleave", () => { tip.hidden = true; cx.setAttribute("visibility", "hidden"); });
+}
+
+function renderMilestones() {
+  const M = S.effekt_med_kvote;
+  $("milestones").innerHTML = `<thead><tr><th>Nye</th>${CL.map((c) => `<th>${esc(c)}</th>`).join("")}<th>Overlevere/år 2036</th></tr></thead><tbody>${
+    Object.entries(M).map(([n, v]) => `<tr><td>${fmt.format(+n)}</td>${CL.map((c) => `<td>${fmt.format(v.fordeling[c])}</td>`).join("")}<td>+${fmt2.format(v.ekstra_overlevere_pr_aar_2036)}</td></tr>`).join("")
+  }</tbody>`;
+}
+
+/* ---------- Municipality table ---------- */
+const KCOLS = [
+  ["kommune", "Kommune", (k) => esc(k.kommune)],
+  ["befolkning", "Indbyggere", (k) => fmt.format(Math.round(k.befolkning))],
+  ["andel_land_pct", "Andel på landet", (k) => fmt.format(Math.round(k.andel_land_pct)) + " %"],
+  ["median_tid_til_stoed_min", "Median tid til stød", (k) => `<span class="${k.median_tid_til_stoed_min >= 10 ? "slow" : ""}">${fmt1.format(k.median_tid_til_stoed_min)} min</span>`],
+  ["daekning_100m_pct", "≤100 m", (k) => fmt1.format(k.daekning_100m_pct) + " %"],
+  ["daekning_500m_pct", "≤500 m", (k) => `<span class="bar"><span><i style="width:${k.daekning_500m_pct}%"></i></span>${fmt.format(Math.round(k.daekning_500m_pct))} %</span>`],
+  ["døgntilgængelige", "Døgntilg. hjertestartere", (k) => fmt.format(k["døgntilgængelige"])],
+  ["vaekst_60plus", "Vækst 60+ til 2036", (k) => `${k.vaekst_60plus >= 1 ? "+" : ""}${fmt1.format((k.vaekst_60plus - 1) * 100)} %`],
+];
+let ksort = { key: "median_tid_til_stoed_min", dir: -1 };
+function renderKommuner() {
+  const rows = [...DATA.kommuner].sort((a, b) => {
+    const x = a[ksort.key], y = b[ksort.key];
+    return (typeof x === "string" ? x.localeCompare(y, "da") : x - y) * ksort.dir;
+  });
+  $("kom-table").innerHTML = `<thead><tr>${KCOLS.map(([k, label]) => `<th scope="col" aria-sort="${ksort.key === k ? (ksort.dir < 0 ? "descending" : "ascending") : "none"}"><button type="button" data-k="${k}">${label}</button></th>`).join("")}</tr></thead>
+  <tbody>${rows.map((k) => `<tr>${KCOLS.map(([, , f], i) => i === 0 ? `<td><a href="#desk-h" data-kom="${esc(k.kommune)}">${f(k)}</a></td>` : `<td>${f(k)}</td>`).join("")}</tr>`).join("")}</tbody>`;
+}
+$("kom-table").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-k]");
+  if (b) { const k = b.dataset.k; ksort = { key: k, dir: ksort.key === k ? -ksort.dir : (k === "kommune" ? 1 : -1) }; renderKommuner(); return; }
+  const a = e.target.closest("a[data-kom]");
+  if (a) { e.preventDefault(); $("sel-kom").value = a.dataset.kom; $("sel-kom").dispatchEvent(new Event("change")); $("desk-h").scrollIntoView({ behavior: "smooth" }); }
+});
+
+/* ---------- Boot ---------- */
+function boot() {
+  renderFigures();
+  [...DATA.kommuner].map((k) => k.kommune).sort((a, b) => a.localeCompare(b, "da")).forEach((k) => {
+    const o = document.createElement("option"); o.value = k; o.textContent = k; $("sel-kom").appendChild(o);
+  });
+  CL.forEach((c) => { const o = document.createElement("option"); o.value = c; o.textContent = c; $("sel-kl").appendChild(o); });
+  buildBase();
+  setTab("new");
+  renderFairness();
+  renderCurve();
+  renderMilestones();
+  renderKommuner();
+  drawAeds();
+}
+boot();
+const retheme = () => { buildBase(); drawAeds(); drawCells(); };
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", retheme);
+new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>

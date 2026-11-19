@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.DS_Store
+# Store rådata hentes med scripts (se README); kun hjertestarterlisten og små DST-udtræk versioneres
+data/raw/*
+!data/raw/aeds.csv
+!data/raw/dst_folk1a_kommuner.csv
+data/processed/
+# Samme side som docs/index.html
+output/hjertestarter_blindspots.html
