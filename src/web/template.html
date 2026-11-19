@@ -136,10 +136,34 @@ select { font: 400 var(--step--1) var(--font-body); color: var(--ink); backgroun
 .pop dt { color: var(--ink-2); }
 .pop dd { margin: 0; text-align: right; font-family: var(--font-data); font-variant-numeric: tabular-nums; }
 .pop .rec { padding: 6px 8px; border-radius: 4px; background: var(--paper); margin-top: 6px; }
-.mk { display: grid; place-items: center; font: 600 10px/1 var(--font-data); color: #fff; }
+.mk { background: none; border: 0; }
+.mk-in { width: 100%; height: 100%; display: grid; place-items: center; font: 600 10px/1 var(--font-data); color: #fff; transition: transform .12s ease-out, box-shadow .12s ease-out; }
 .mk-new { background: var(--new); border-radius: 50%; box-shadow: 0 0 0 2px var(--surface); }
 .mk-up { background: var(--upgrade); box-shadow: 0 0 0 2px var(--surface); }
-.mk-pub { width: 0 !important; height: 0 !important; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 14px solid var(--ink); background: none; }
+.mk-pub { width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 14px solid var(--ink); background: none; }
+.mk:hover .mk-in, .mk.hl .mk-in { transform: scale(1.45); }
+.mk:hover .mk-new, .mk.hl .mk-new, .mk:hover .mk-up, .mk.hl .mk-up { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
+.list li.hl button { background: var(--paper); box-shadow: inset 3px 0 0 var(--new); }
+
+/* Hover: tooltips og info-kort */
+.leaflet-tooltip { background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 4px; box-shadow: 0 4px 14px rgba(0,0,0,.16); font: 400 12px/1.4 var(--font-body); padding: 6px 9px; }
+.leaflet-tooltip-top::before { border-top-color: var(--rule); }
+.leaflet-tooltip-bottom::before { border-bottom-color: var(--rule); }
+.leaflet-tooltip-left::before { border-left-color: var(--rule); }
+.leaflet-tooltip-right::before { border-right-color: var(--rule); }
+.tt b { font-family: var(--font-data); font-weight: 500; }
+.tt .tt-h { font-weight: 600; display: block; margin-bottom: 2px; }
+.tt .tt-s { color: var(--ink-2); display: block; }
+.inspector { width: 252px; background: color-mix(in srgb, var(--surface) 94%, transparent); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: 0 6px 20px rgba(0,0,0,.14); padding: 10px 12px; font-size: 12px; line-height: 1.4; color: var(--ink); pointer-events: none; }
+.inspector .in-place { font-weight: 600; font-size: 13px; }
+.inspector .in-sub { color: var(--ink-2); }
+.inspector .in-time { display: flex; align-items: baseline; gap: 8px; margin: 6px 0 4px; }
+.inspector .in-time b { font: 700 30px/1 var(--font-display); }
+.inspector .in-time i { width: 12px; height: 12px; border-radius: 2px; align-self: center; }
+.inspector dl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1px 10px; margin: 6px 0 0; }
+.inspector dt { color: var(--ink-2); }
+.inspector dd { margin: 0; text-align: right; font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.inspector .in-hint { color: var(--ink-3); }
 
 /* By og land */
 .fair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
@@ -196,6 +220,8 @@ footer { color: var(--ink-3); font-size: var(--step--1); border-top: 1px solid v
 }
 @media (max-width: 520px) {
   #map { height: 64vh; min-height: 380px; }
+  .inspector { width: 200px; font-size: 11px; padding: 8px 10px; }
+  .inspector .in-time b { font-size: 24px; }
   .figure b { font-size: var(--step-2); }
   .title-row { align-items: flex-start; }
   .aed-sign { width: 48px; height: 48px; }
@@ -224,7 +250,7 @@ footer { color: var(--ink-3); font-size: var(--step--1); border-top: 1px solid v
   <section aria-labelledby="desk-h">
     <div class="section-head">
       <h2 id="desk-h">Kort og prioriteret liste</h2>
-      <p>Farven viser den forventede tid til første stød, hvor folk bor: den korteste af at hente nærmeste døgntilgængelige hjertestarter og ambulancens ankomst. Vælg en liste til højre og klik på et sted for at zoome ind.</p>
+      <p>Farven viser den forventede tid til første stød, hvor folk bor: den korteste af at hente nærmeste døgntilgængelige hjertestarter og ambulancens ankomst. Hold musen over kortet for at se tallene for et bestemt sted, og over et forslag for at se, hvor langt dets effekt rækker.</p>
     </div>
     <div class="desk">
       <div class="map-col">
@@ -391,9 +417,135 @@ let outlineLayer;
 const popLayer = L.imageOverlay(DATA.raster.png, DATA.raster.bounds, { opacity: 0.8, interactive: false });
 const timeLayer = L.imageOverlay(DATA.accessRaster.png, DATA.accessRaster.bounds, { opacity: 0.9, interactive: false }).addTo(map);
 const aedLayer = L.layerGroup().addTo(map);
-const cellLayer = L.layerGroup().addTo(map);
 const siteLayer = L.layerGroup().addTo(map);
 const siteMarkers = new Map();
+const hoverRenderer = L.svg({ padding: 0.2 });
+const hoverLayer = L.layerGroup().addTo(map);
+const siteHoverLayer = L.layerGroup().addTo(map);
+
+/* ---------- Model (samme formler som analysen) ---------- */
+const MODEL = DATA.model;
+const tAed = (d) => MODEL.tAlarm + (2 * MODEL.route * d) / MODEL.speed;
+const surv = (t) => 1 / (1 + Math.exp(-(MODEL.valenzuela[0] - MODEL.valenzuela[1] * MODEL.tCpr - MODEL.valenzuela[2] * t)));
+const reach = (k) => (Math.max(0, DATA.ems[k] - MODEL.tAlarm) * MODEL.speed) / (2 * MODEL.route);
+const metres = (la1, lo1, la2, lo2) => Math.hypot((lo2 - lo1) * Math.cos((la1 * Math.PI) / 180) * 111320, (la2 - la1) * 110540);
+
+/* ---------- Rumligt opslag (grid-hash) ---------- */
+const IX_DEG = 0.01, IX_LON = 0.018, IX_MIN_M = 1000;
+function makeIndex(lat, lon, keep) {
+  const cells = new Map();
+  for (let i = 0; i < lat.length; i++) {
+    if (keep && !keep(i)) continue;
+    const key = Math.floor(lat[i] / IX_DEG) + ":" + Math.floor(lon[i] / IX_LON);
+    if (!cells.has(key)) cells.set(key, []);
+    cells.get(key).push(i);
+  }
+  return { cells, lat, lon };
+}
+function nearest(ix, la, lo, maxRing = 12) {
+  const r0 = Math.floor(la / IX_DEG), c0 = Math.floor(lo / IX_LON);
+  let best = -1, bd = Infinity;
+  for (let ring = 0; ring <= maxRing; ring++) {
+    for (let dr = -ring; dr <= ring; dr++) {
+      for (let dc = -ring; dc <= ring; dc++) {
+        if (Math.max(Math.abs(dr), Math.abs(dc)) !== ring) continue;
+        const arr = ix.cells.get(r0 + dr + ":" + (c0 + dc));
+        if (!arr) continue;
+        for (const i of arr) {
+          const d = metres(la, lo, ix.lat[i], ix.lon[i]);
+          if (d < bd) { bd = d; best = i; }
+        }
+      }
+    }
+    if (best >= 0 && bd <= ring * IX_MIN_M) break;
+  }
+  return best < 0 ? null : { i: best, d: bd };
+}
+const aed247Ix = makeIndex(DATA.aeds.lat, DATA.aeds.lon, (i) => DATA.aeds.k[i] <= 1);
+const cellIx = makeIndex(DATA.cells.lat, DATA.cells.lon);
+
+/* ---------- Kommune under markøren ---------- */
+const KOM = DATA.outlines.features.map((f) => {
+  const polys = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
+  let b = [Infinity, Infinity, -Infinity, -Infinity];
+  polys.forEach((p) => p[0].forEach(([x, y]) => { b = [Math.min(b[0], x), Math.min(b[1], y), Math.max(b[2], x), Math.max(b[3], y)]; }));
+  return { name: f.properties.kommune, polys, bbox: b, feature: f };
+});
+const KOM_STATS = new Map(DATA.kommuner.map((k) => [k.kommune, k]));
+function inRing(x, y, ring) {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i], [xj, yj] = ring[j];
+    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+function kommuneAt(la, lo) {
+  for (const k of KOM) {
+    if (lo < k.bbox[0] || lo > k.bbox[2] || la < k.bbox[1] || la > k.bbox[3]) continue;
+    if (k.polys.some((p) => inRing(lo, la, p[0]) && !p.slice(1).some((h) => inRing(lo, la, h)))) return k;
+  }
+  return null;
+}
+
+/* ---------- Info-kort der følger markøren ---------- */
+const Inspector = L.Control.extend({
+  onAdd() {
+    const el = L.DomUtil.create("div", "inspector");
+    el.setAttribute("aria-live", "polite");
+    el.innerHTML = `<div class="in-hint">Hold musen over kortet (eller tryk) for at se tid til første stød, nærmeste hjertestarter og kommune.</div>`;
+    return el;
+  },
+});
+const inspector = new Inspector({ position: "topright" }).addTo(map);
+let hoverFrame = 0, lastLatLng = null;
+
+function inspect(latlng) {
+  const la = latlng.lat, lo = latlng.lng;
+  const aed = nearest(aed247Ix, la, lo);
+  const cell = nearest(cellIx, la, lo, 3);
+  const inCell = cell && cell.d <= 177;
+  const k = cell && cell.d <= 3000 ? DATA.cells.k[cell.i] : 2;
+  const d = aed ? aed.d : Infinity;
+  const tA = tAed(d), tE = DATA.ems[k], t = Math.min(tA, tE);
+  const kom = kommuneAt(la, lo);
+  const ks = kom ? KOM_STATS.get(kom.name) : null;
+  const C = DATA.cells;
+  inspector.getContainer().innerHTML = `
+    <div class="in-place">${kom ? esc(kom.name) : "Uden for kommunerne"}</div>
+    <div class="in-sub">${esc(CL[k])} · ambulance antaget ${fmt.format(tE)} min</div>
+    <div class="in-time"><i style="background:${rampColor(t)}"></i><b class="num">${fmt1.format(t)} min</b><span class="in-sub">til første stød</span></div>
+    <div class="in-sub">${tA < tE ? "Hjertestarteren er hurtigst" : "Ambulancen er hurtigst – hjertestarteren er for langt væk"}</div>
+    <dl>
+      <dt>Nærmeste døgntilg. hjertestarter</dt><dd>${aed ? fmt.format(Math.round(d)) + " m" : "–"}</dd>
+      <dt>Hente og vende tilbage</dt><dd>${aed ? fmt1.format(tA) + " min" : "–"}</dd>
+      <dt>Overlevelse ved stødbar rytme</dt><dd>${fmt.format(Math.round(100 * surv(t)))} %</dd>
+      <dt>Beboere i 250 m-felt</dt><dd>${inCell ? fmt.format(C.pop[cell.i]) + (C.pop60[cell.i] ? ` (${fmt.format(C.pop60[cell.i])} 60+)` : "") : "under 10"}</dd>
+      ${ks ? `<dt>Kommunens median</dt><dd>${fmt1.format(ks.median_tid_til_stoed_min)} min</dd>` : ""}
+    </dl>`;
+  hoverLayer.clearLayers();
+  const ink = tok("--ink");
+  if (aed && d < 6000) {
+    const A = DATA.aeds;
+    L.polyline([[la, lo], [A.lat[aed.i], A.lon[aed.i]]], { renderer: hoverRenderer, color: tok("--aed"), weight: 2, dashArray: "5 5", interactive: false }).addTo(hoverLayer);
+    L.circleMarker([A.lat[aed.i], A.lon[aed.i]], { renderer: hoverRenderer, radius: 7, color: tok("--aed"), weight: 2, fill: false, interactive: false }).addTo(hoverLayer);
+  }
+  if (inCell && map.getZoom() >= 11) {
+    const cla = C.lat[cell.i], clo = C.lon[cell.i];
+    const dLat = 125 / 110540, dLon = 125 / (111320 * Math.cos((cla * Math.PI) / 180));
+    L.rectangle([[cla - dLat, clo - dLon], [cla + dLat, clo + dLon]], { renderer: hoverRenderer, color: ink, weight: 1.5, fill: false, interactive: false }).addTo(hoverLayer);
+  }
+  if (kom) {
+    L.geoJSON(kom.feature, { renderer: hoverRenderer, interactive: false, style: { color: ink, weight: 2, opacity: 0.85, fill: false } }).addTo(hoverLayer);
+  }
+}
+map.on("mousemove", (e) => {
+  lastLatLng = e.latlng;
+  if (hoverFrame) return;
+  hoverFrame = requestAnimationFrame(() => { hoverFrame = 0; inspect(lastLatLng); });
+});
+map.on("click", (e) => inspect(e.latlng));
+map.getContainer().addEventListener("mouseleave", () => { hoverLayer.clearLayers(); });
 
 function buildBase() {
   if (outlineLayer) outlineLayer.remove();
@@ -410,6 +562,13 @@ function buildBase() {
 }
 
 const AED_CAT = ["Døgnåben", "Aflåst skab – kode via 112", "Åbningstid", "Utilgængelig"];
+const AED_NOTE = [
+  `Kan hentes hele døgnet. Beboere 100 m væk får stød efter ca. ${fmt1.format(tAed(100))} min.`,
+  "Kan hentes hele døgnet; 112 oplyser koden til skabet.",
+  "Kun tilgængelig i åbningstiden – tæller ikke med om natten.",
+  "Registreret, men står som utilgængelig.",
+];
+const aedTip = (k) => `<span class="tt-h">${AED_CAT[k]}</span><span class="tt-s">${AED_NOTE[k]}</span>`;
 const inView = (lat, lon, b) => lat > b.getSouth() && lat < b.getNorth() && lon > b.getWest() && lon < b.getEast();
 
 function drawAeds() {
@@ -426,7 +585,7 @@ function drawAeds() {
     L.circleMarker([A.lat[i], A.lon[i]], {
       renderer: canvas, radius: z >= 14 ? 5 : 3.5, weight: k === 1 ? 2 : 1, color: k === 1 ? colors[k] : tok("--surface"),
       fillColor: colors[k], fillOpacity: k === 1 ? 0 : 1,
-    }).bindTooltip(AED_CAT[k]).addTo(aedLayer);
+    }).bindTooltip(aedTip(k), { direction: "top", offset: [0, -4], className: "tt" }).addTo(aedLayer);
   }
 }
 
@@ -436,24 +595,6 @@ function rampColor(t) {
   const [a, b] = u <= 0.5 ? [stops[0], stops[1]] : [stops[1], stops[2]];
   const f = (u - a[0]) / (b[0] - a[0]);
   return `rgb(${a[1].map((v, i) => Math.round(v + f * (b[1][i] - v))).join(",")})`;
-}
-
-function drawCells() {
-  cellLayer.clearLayers();
-  if (!$("lyr-time").checked || map.getZoom() < 13) return;
-  const b = map.getBounds().pad(0.1), C = DATA.cells;
-  for (let i = 0; i < C.lat.length; i++) {
-    if (!inView(C.lat[i], C.lon[i], b)) continue;
-    const dLat = 125 / 111320, dLon = 125 / (111320 * Math.cos(C.lat[i] * Math.PI / 180));
-    L.rectangle([[C.lat[i] - dLat, C.lon[i] - dLon], [C.lat[i] + dLat, C.lon[i] + dLon]], {
-      renderer: canvas, weight: 0, fillColor: rampColor(C.t[i]), fillOpacity: 0.01,
-    }).bindPopup(`<div class="pop"><h4>250 × 250 m · ${esc(CL[C.k[i]])}</h4><dl>
-      <dt>Beboere</dt><dd>${fmt.format(C.pop[i])}</dd>
-      <dt>Heraf 60+</dt><dd>${fmt.format(C.pop60[i])}</dd>
-      <dt>Afstand til døgntilg. hjertestarter</dt><dd>${fmt.format(C.d[i])} m</dd>
-      <dt>Tid til første stød</dt><dd>${fmt1.format(C.t[i])} min</dd>
-      <dt>Antaget ambulancetid</dt><dd>${fmt.format(DATA.ems[C.k[i]])} min</dd></dl></div>`).addTo(cellLayer);
-  }
 }
 
 /* ---------- Tabs & list ---------- */
@@ -510,13 +651,53 @@ function filteredRows() {
   return TABS[active].rows().filter((d) => (!kom || d.kom === kom) && (!kl || d.kl === kl));
 }
 
+function siteTip(d) {
+  if (active === "pub") {
+    return `<span class="tt-h">${esc(d.name)}</span><span class="tt-s">${esc(d.cat)} · ${esc(d.kom)}</span>Nærmeste hjertestarter <b>${fmt.format(d.d)} m</b> · <b>${fmt.format(d.pop)}</b> beboere ≤500 m`;
+  }
+  const head = active === "new" ? `#${d.r} · ${d.conv ? "Opgradér eksisterende" : "Ny hjertestarter"}` : `#${d.r} · Opgradér eksisterende`;
+  const place = active === "new" ? (d.type === "Bolig" ? "udendørs skab" : esc(d.host)) : (d.adg === "åbningstid" ? "har i dag åbningstid" : "står som utilgængelig");
+  return `<span class="tt-h">${head}</span><span class="tt-s">${esc(d.kl)} · ${esc(d.kom)} · ${place}</span>` +
+    `<b>${fmt.format(d.pop)}</b> beboere får kortere tid (i dag ${fmt1.format(d.tb)} min)<br>` +
+    `Hurtigere end ambulancen inden for <b>${fmt.format(Math.round(reach(kIndex(d.kl))))} m</b> · <b>+${fmt3.format(d.g36)}</b> overlevere/år`;
+}
+
+let hovered = null;
+function highlight(r, on) {
+  const m = siteMarkers.get(r);
+  const li = $("list").querySelector(`li[data-r="${r}"]`);
+  li?.classList.toggle("hl", on);
+  if (!m) return;
+  m.getElement()?.classList.toggle("hl", on);
+  m.setZIndexOffset(on ? 100000 : 2000 - r);
+  siteHoverLayer.clearLayers();
+  if (!on || active === "pub") return;
+  const d = m.options.row;
+  const color = tok(active === "up" ? "--upgrade" : "--new");
+  L.circle([d.lat, d.lon], { renderer: hoverRenderer, radius: reach(kIndex(d.kl)), color, weight: 1.5, dashArray: "4 4", fillColor: color, fillOpacity: 0.08, interactive: false }).addTo(siteHoverLayer);
+  L.circle([d.lat, d.lon], { renderer: hoverRenderer, radius: 100, color, weight: 1, fill: false, opacity: 0.6, interactive: false }).addTo(siteHoverLayer);
+}
+function setHovered(r) {
+  if (hovered === r) return;
+  if (hovered !== null) highlight(hovered, false);
+  hovered = r;
+  if (r !== null) highlight(r, true);
+}
+
 function drawSites() {
   siteLayer.clearLayers();
   siteMarkers.clear();
+  hovered = null;
+  siteHoverLayer.clearLayers();
   const t = TABS[active], n = +$("sel-n").value, showNum = map.getZoom() >= 12 && active !== "pub";
   filteredRows().slice(0, n).forEach((d) => {
-    const icon = L.divIcon({ className: `mk ${t.cls}`, html: showNum && d.r < 1000 ? `<span>${d.r}</span>` : "", iconSize: [t.size, t.size] });
-    const m = L.marker([d.lat, d.lon], { icon, keyboard: false, riseOnHover: true, zIndexOffset: 2000 - d.r }).bindPopup(popupHtml(active, d), { maxWidth: 310 });
+    const label = showNum && d.r < 1000 ? d.r : "";
+    const icon = L.divIcon({ className: "mk", html: `<span class="mk-in ${t.cls}">${label}</span>`, iconSize: [t.size, t.size] });
+    const m = L.marker([d.lat, d.lon], { icon, keyboard: false, zIndexOffset: 2000 - d.r, row: d })
+      .bindPopup(popupHtml(active, d), { maxWidth: 310 })
+      .bindTooltip(siteTip(d), { direction: "top", offset: [0, -t.size / 2 - 2], className: "tt", opacity: 1 });
+    m.on("mouseover", () => setHovered(d.r));
+    m.on("mouseout", () => setHovered(null));
     m.addTo(siteLayer);
     siteMarkers.set(d.r, m);
   });
@@ -528,9 +709,19 @@ function renderList() {
   const rows = filteredRows().slice(0, 300);
   $("list").innerHTML = rows.length ? rows.map((d) => {
     const [v, u] = t.metric(d);
-    return `<li><button type="button" data-r="${d.r}"><span class="rank">#${d.r}</span><span style="min-width:0"><span class="item-t">${esc(t.title(d))}</span><span class="item-s">${t.chip(d)}${esc(t.sub(d))}</span></span><span class="item-m">${v}<small>${u}</small></span></button></li>`;
+    return `<li data-r="${d.r}"><button type="button" data-r="${d.r}"><span class="rank">#${d.r}</span><span style="min-width:0"><span class="item-t">${esc(t.title(d))}</span><span class="item-s">${t.chip(d)}${esc(t.sub(d))}</span></span><span class="item-m">${v}<small>${u}</small></span></button></li>`;
   }).join("") : `<li style="padding:14px;color:var(--ink-2)">Ingen forslag med dette filter.</li>`;
 }
+
+$("list").addEventListener("pointerover", (e) => {
+  const li = e.target.closest("li[data-r]");
+  setHovered(li ? +li.dataset.r : null);
+});
+$("list").addEventListener("pointerleave", () => setHovered(null));
+$("list").addEventListener("focusin", (e) => {
+  const li = e.target.closest("li[data-r]");
+  if (li) setHovered(+li.dataset.r);
+});
 
 $("list").addEventListener("click", (e) => {
   const btn = e.target.closest("button[data-r]");
@@ -562,7 +753,7 @@ $("sel-kom").addEventListener("change", () => { renderList(); drawSites(); zoomT
 $("sel-kl").addEventListener("change", () => { renderList(); drawSites(); });
 $("sel-n").addEventListener("change", drawSites);
 $("lyr-pop").addEventListener("change", (e) => (e.target.checked ? popLayer.addTo(map) : popLayer.remove()));
-$("lyr-time").addEventListener("change", (e) => { e.target.checked ? timeLayer.addTo(map) : timeLayer.remove(); drawCells(); });
+$("lyr-time").addEventListener("change", (e) => (e.target.checked ? timeLayer.addTo(map) : timeLayer.remove()));
 $("lyr-kom").addEventListener("change", buildBase);
 $("lyr-aed").addEventListener("change", drawAeds);
 $("lyr-ortho").addEventListener("change", (e) => {
@@ -571,7 +762,7 @@ $("lyr-ortho").addEventListener("change", (e) => {
 });
 let lastZoomBand = null;
 map.on("moveend", () => {
-  drawAeds(); drawCells();
+  drawAeds();
   const band = map.getZoom() >= 12;
   if (band !== lastZoomBand) { lastZoomBand = band; drawSites(); }
 });
@@ -691,7 +882,7 @@ function boot() {
   drawAeds();
 }
 boot();
-const retheme = () => { buildBase(); drawAeds(); drawCells(); };
+const retheme = () => { buildBase(); drawAeds(); if (lastLatLng) inspect(lastLatLng); };
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", retheme);
 new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 </script>

@@ -164,6 +164,13 @@ def build_data() -> dict:
         "kommuner": kommuner[kom_cols].round(3).to_dict("records"),
         "classes": list(config.URBAN_CLASSES),
         "ems": list(config.EMS_MIN_BY_CLASS),
+        "model": {
+            "tAlarm": config.T_ALARM_MIN,
+            "speed": config.RETRIEVE_SPEED_M_PER_MIN,
+            "route": config.ROUTE_FACTOR,
+            "tCpr": config.T_CPR_MIN,
+            "valenzuela": list(config.VALENZUELA),
+        },
         "aeds": aed_layer(pd.read_parquet(proc / "aeds_med_kommune.parquet")),
         "cells": access_cells(access),
         "raster": density_raster(demand["x"].to_numpy(), demand["y"].to_numpy(), demand["pop"].to_numpy()),
