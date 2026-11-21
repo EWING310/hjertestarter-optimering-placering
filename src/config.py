@@ -44,7 +44,7 @@ HOST_SNAP_RADIUS_M = 75  # forslag "snappes" til et offentligt værtssted inden 
 
 # --- Overlevelsesmodel (samme målestok for by og land) -------------------------
 # Tid til første stød = min(tid til at hente nærmeste døgntilgængelige hjertestarter,
-# ambulancens responstid). Overlevelse ved stødbar rytme: Valenzuela et al.,
+# ambulancens tid til stød). Overlevelse ved stødbar rytme: Valenzuela et al.,
 # Circulation 1997: logit = 0.260 - 0.106*(tid til HLR) - 0.139*(tid til stød).
 T_ALARM_MIN = 2.0  # genkende hjertestop, ringe 112, sende nogen afsted
 RETRIEVE_SPEED_M_PER_MIN = 110.0  # rask gang/let løb
@@ -53,9 +53,14 @@ T_CPR_MIN = 2.0  # HLR startes typisk hurtigt i DK (telefonvejledt)
 VALENZUELA = (0.260, 0.106, 0.139)
 SHOCKABLE_SHARE = 0.25  # andel hjertestop med stødbar rytme, hvor en hjertestarter kan redde liv
 
-# Urbaniseringsgrad (EU/FN DEGURBA niveau 1 via GHSL-SMOD 2025) og antaget median
-# responstid for ambulance. Danske Regioner: tydelig sammenhæng mellem responstid
-# og befolkningstæthed; 9 ud af 10 udrykninger er fremme inden for 15 min.
+# Ambulancens responstid regnes fra 112-opkaldet til ankomst. Den modelleres pr. celle ud fra
+# køretiden ad vejnettet fra nærmeste ambulancebase og kalibreres mod regionernes målte
+# responstider (src/ambulance.py, src/road_network.py, src/ems_model.py). Fra kollaps til
+# opkald og fra ankomst til stød lægges samme 2 min til som for hjertestarteren, så de to
+# veje til første stød måles fra samme øjeblik.
+T_EMS_EXTRA_MIN = T_ALARM_MIN
+
+# Urbaniseringsgrad (EU/FN DEGURBA niveau 1 via GHSL-SMOD 2025). Bruges til at fordele
+# forslagene mellem by og land - ambulancetiden afhænger ikke af klassen.
 URBAN_CLASSES = ("By", "Mindre by/forstad", "Land")
-EMS_MIN_BY_CLASS = (6.0, 8.0, 11.0)
 HOST_SNAP_BY_CLASS_M = (75.0, 100.0, 200.0)

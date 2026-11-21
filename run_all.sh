@@ -7,5 +7,8 @@ $PY -m src.fetch_aeds
 $PY -m src.fetch_osm
 $PY -m src.population
 $PY -m src.projection
+$PY -m src.ambulance
+$PY -m src.road_network
+$PY -m src.ems_model
 $PY -m src.analysis
 $PY -m src.web_export

@@ -12,7 +12,9 @@ from src import config, placement
 from src.coverage import coverage_share, nearest_distance
 from src.load import load_aeds, load_demand, load_pois, unproject, xy
 from src.population import attach_municipality
-from src.survival import survival, time_to_defib
+from src.ambulance import load_bases
+from src.ems_model import PARAMS_JSON, ambulance_times
+from src.survival import survival, time_to_defib, time_to_ems
 from src.urbanization import urban_class
 
 ACCESS_CELL_M = 250  # aggregering af tid til første stød til kortet
@@ -22,9 +24,10 @@ MILESTONES = (50, 100, 250, 500, 1000, 2000)
 def enrich_demand(demand: pd.DataFrame, aeds_247: pd.DataFrame, aeds_any: pd.DataFrame) -> pd.DataFrame:
     klasse = urban_class(demand["x"].to_numpy(), demand["y"].to_numpy())
     dist_247 = nearest_distance(xy(demand), xy(aeds_247))
-    t_ems = np.asarray(config.EMS_MIN_BY_CLASS)[klasse]
+    ems = ambulance_times(demand)
+    t_ems = time_to_ems(ems["responstid_min"].to_numpy())
     t_now = time_to_defib(dist_247, t_ems)
-    return demand.assign(
+    return demand.join(ems).assign(
         klasse=klasse,
         t_ems=t_ems,
         dist_247=dist_247,
@@ -69,6 +72,7 @@ def group_access(d: pd.DataFrame) -> pd.Series:
             "daekning_100m_pct": 100 * pop[d["dist_247"] <= 100].sum() / pop.sum(),
             "daekning_500m_pct": 100 * pop[d["dist_247"] <= 500].sum() / pop.sum(),
             "median_afstand_m": _weighted_median(d["dist_247"].to_numpy(), pop),
+            "median_ambulance_responstid_min": _weighted_median(d["responstid_min"].to_numpy(), pop),
             "median_tid_til_stoed_min": _weighted_median(d["t_now"].to_numpy(), pop),
             "overlevelse_stoedbar_pct": 100 * np.average(d["s_now"], weights=risk),
             "forventede_overlevere_pr_aar": config.SHOCKABLE_SHARE * float((risk * d["s_now"]).sum()),
@@ -116,15 +120,31 @@ def access_grid(demand: pd.DataFrame) -> pd.DataFrame:
     s = ACCESS_CELL_M
     d = demand.assign(
         bx=np.floor(demand["x"] / s), by=np.floor(demand["y"] / s),
-        tw=demand["t_now"] * demand["pop"], dw=demand["dist_247"] * demand["pop"],
+        tw=demand["t_now"] * demand["pop"], dw=demand["dist_247"] * demand["pop"], ew=demand["responstid_min"] * demand["pop"],
     )
     agg = d.groupby(["bx", "by"], as_index=False).agg(
-        pop=("pop", "sum"), pop60=("pop60", "sum"), risk=("risk", "sum"), tw=("tw", "sum"), dw=("dw", "sum"), klasse=("klasse", "first")
+        pop=("pop", "sum"), pop60=("pop60", "sum"), risk=("risk", "sum"), tw=("tw", "sum"), dw=("dw", "sum"),
+        ew=("ew", "sum"), klasse=("klasse", "first"),
     )
+    base = d.loc[d.groupby(["bx", "by"])["pop"].idxmax(), ["bx", "by", "base_idx"]]
+    agg = agg.merge(base, on=["bx", "by"])
     agg = agg[agg["pop"] > 0]
     lon, lat = unproject(((agg["bx"] + 0.5) * s).to_numpy(), ((agg["by"] + 0.5) * s).to_numpy())
-    agg = agg.assign(t=agg["tw"] / agg["pop"], d=agg["dw"] / agg["pop"], lat=lat.round(5), lon=lon.round(5))
-    return agg.drop(columns=["bx", "by", "tw", "dw"])
+    agg = agg.assign(t=agg["tw"] / agg["pop"], d=agg["dw"] / agg["pop"], e=agg["ew"] / agg["pop"], lat=lat.round(5), lon=lon.round(5))
+    return agg.drop(columns=["bx", "by", "tw", "dw", "ew"])
+
+
+def ambulance_summary() -> dict:
+    calib = json.loads(PARAMS_JSON.read_text())
+    bases = load_bases()
+    return {
+        "baser": int(len(bases)),
+        "baser_pr_region": bases["region"].value_counts().to_dict(),
+        "geokodning": bases["geokodning"].value_counts().to_dict(),
+        "model": calib["params"],
+        "rmse_andel": calib["rmse_andel"],
+        "t_ekstra_min": config.T_EMS_EXTRA_MIN,
+    }
 
 
 def milestones(props: pd.DataFrame) -> dict:
@@ -188,6 +208,7 @@ def main() -> None:
         "effekt_med_kvote": milestones(fair),
         "effekt_uden_kvote": milestones(efficient),
         "gammel_metode_fordeling": _old_distribution(),
+        "ambulance": ambulance_summary(),
         "forventede_overlevere_pr_aar_i_dag": round(config.SHOCKABLE_SHARE * float((demand["risk"] * demand["s_now"]).sum()), 1),
         "offentlige_steder_uden_hjertestarter_100m": int(len(public)),
     }

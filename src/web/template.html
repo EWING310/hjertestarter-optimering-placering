@@ -17,6 +17,7 @@
   --new: #2F5BEA;
   --upgrade: #C47F00;
   --alert: #C2381F;
+  --ems: #7B3FA8;
   --cls0: #1D3557;
   --cls1: #4A76A8;
   --cls2: #8AAED3;
@@ -35,14 +36,14 @@
   :root:not([data-theme="light"]) {
     --paper: #0F1714; --surface: #141E1A; --ink: #E4ECE8; --ink-2: #A9B7B1; --ink-3: #85948E;
     --rule: #28352F; --land: #1B2622; --sea: #0A1012; --aed: #2FA676; --new: #6886EE;
-    --upgrade: #B47E1C; --alert: #E2604A; --cls0: #E3ECF6; --cls1: #8FB0D6; --cls2: #3F6A99;
+    --upgrade: #B47E1C; --alert: #E2604A; --ems: #B48AE0; --cls0: #E3ECF6; --cls1: #8FB0D6; --cls2: #3F6A99;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0F1714; --surface: #141E1A; --ink: #E4ECE8; --ink-2: #A9B7B1; --ink-3: #85948E;
   --rule: #28352F; --land: #1B2622; --sea: #0A1012; --aed: #2FA676; --new: #6886EE;
-  --upgrade: #B47E1C; --alert: #E2604A; --cls0: #E3ECF6; --cls1: #8FB0D6; --cls2: #3F6A99;
+  --upgrade: #B47E1C; --alert: #E2604A; --ems: #B48AE0; --cls0: #E3ECF6; --cls1: #8FB0D6; --cls2: #3F6A99;
   color-scheme: dark;
 }
 
@@ -50,9 +51,9 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: var(--step-0); line-height: 1.5; }
-.wrap { max-width: 1440px; margin: 0 auto; padding-inline: clamp(16px, 3vw, 40px); padding-block: 28px 64px; display: grid; gap: 48px; }
+.wrap { max-width: 1440px; margin: 0 auto; padding-inline: clamp(16px, 3vw, 40px); padding-block: 28px 64px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: .01em; line-height: 1.02; text-wrap: balance; margin: 0; }
-h1 { font-size: var(--step-4); text-transform: uppercase; }
+h1 { font-size: var(--step-4); text-transform: uppercase; hyphens: auto; overflow-wrap: break-word; min-width: 0; }
 h2 { font-size: var(--step-3); text-transform: uppercase; }
 h3 { font-size: var(--step-2); }
 p { margin: 0; }
@@ -95,6 +96,9 @@ a { color: var(--new); }
 .shape.ring { border-radius: 50%; border: 2px solid var(--aed); }
 .shape.new { border-radius: 50%; background: var(--new); box-shadow: 0 0 0 2px var(--surface); }
 .shape.up { background: var(--upgrade); }
+.shape.ems { border-radius: 3px; background: var(--ems); position: relative; }
+.shape.ems::before, .mk-ems::before { content: ""; position: absolute; inset: 50% 22%; height: 2px; margin-top: -1px; background: #fff; }
+.shape.ems::after, .mk-ems::after { content: ""; position: absolute; inset: 22% 50%; width: 2px; margin-left: -1px; background: #fff; }
 .shape.pub { width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 12px solid var(--ink); }
 
 .panel { border-left: 1px solid var(--rule); display: grid; grid-template-rows: auto auto minmax(0, 1fr); min-width: 0; max-height: calc(min(76vh, 760px) + 132px); }
@@ -141,6 +145,7 @@ select { font: 400 var(--step--1) var(--font-body); color: var(--ink); backgroun
 .mk-new { background: var(--new); border-radius: 50%; box-shadow: 0 0 0 2px var(--surface); }
 .mk-up { background: var(--upgrade); box-shadow: 0 0 0 2px var(--surface); }
 .mk-pub { width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 14px solid var(--ink); background: none; }
+.mk-ems { position: relative; background: var(--ems); border-radius: 3px; box-shadow: 0 0 0 1.5px var(--surface); }
 .mk:hover .mk-in, .mk.hl .mk-in { transform: scale(1.45); }
 .mk:hover .mk-new, .mk.hl .mk-new, .mk:hover .mk-up, .mk.hl .mk-up { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink); }
 .list li.hl button { background: var(--paper); box-shadow: inset 3px 0 0 var(--new); }
@@ -250,7 +255,7 @@ footer { color: var(--ink-3); font-size: var(--step--1); border-top: 1px solid v
   <section aria-labelledby="desk-h">
     <div class="section-head">
       <h2 id="desk-h">Kort og prioriteret liste</h2>
-      <p>Farven viser den forventede tid til første stød, hvor folk bor: den korteste af at hente nærmeste døgntilgængelige hjertestarter og ambulancens ankomst. Hold musen over kortet for at se tallene for et bestemt sted, og over et forslag for at se, hvor langt dets effekt rækker.</p>
+      <p>Farven viser den forventede tid til første stød, hvor folk bor: den korteste af at hente nærmeste døgntilgængelige hjertestarter og ambulancen fra nærmeste base. Hold musen over kortet for at se tallene for et bestemt sted, og over et forslag for at se, hvor langt dets effekt rækker.</p>
     </div>
     <div class="desk">
       <div class="map-col">
@@ -258,6 +263,7 @@ footer { color: var(--ink-3); font-size: var(--step--1); border-top: 1px solid v
           <label><input type="checkbox" id="lyr-time" checked> Tid til første stød</label>
           <label><input type="checkbox" id="lyr-pop"> Befolkning</label>
           <label><input type="checkbox" id="lyr-aed" checked> Eksisterende hjertestartere</label>
+          <label><input type="checkbox" id="lyr-ems" checked> Ambulancebaser</label>
           <label><input type="checkbox" id="lyr-kom" checked> Kommunegrænser</label>
           <label><input type="checkbox" id="lyr-ortho"> Ortofoto</label>
         </div>
@@ -270,6 +276,7 @@ footer { color: var(--ink-3); font-size: var(--step--1); border-top: 1px solid v
           <span><i class="shape up"></i>Åbningstid / utilgængelig</span>
           <span><i class="shape new"></i>Ny placering</span>
           <span><i class="shape pub"></i>Offentligt sted uden hjertestarter</span>
+          <span><i class="shape ems"></i>Ambulancebase</span>
         </div>
       </div>
       <aside class="panel" aria-label="Prioriterede forslag">
@@ -338,14 +345,16 @@ footer { color: var(--ink-3); font-size: var(--step--1); border-top: 1px solid v
           <li>Befolkning: GHSL GHS-POP 2025 (100 m), kalibreret pr. kommune til Danmarks Statistik FOLK1A. Andel 60+ fra Meta HRSL 2020.</li>
           <li>Fremtid: DST befolkningsfremskrivning FRKM126 (2026 → 2036).</li>
           <li>By og land: GHSL-SMOD 2025, EU/FN's urbaniseringsgrad (DEGURBA) på 1 km.</li>
-          <li>Værtssteder: OpenStreetMap. Ortofoto: Esri World Imagery.</li>
+          <li>Ambulancer: <span class="num" id="m-bases"></span> baser fra regionernes og operatørernes egne oversigter, geokodet mod adresserne i OpenStreetMap. Responstider: Danske Regioner (pr. region) og Region Syddanmark (pr. kommune), 2025–26.</li>
+          <li>Vejnet, værtssteder og færger: OpenStreetMap. Ortofoto: Esri World Imagery.</li>
         </ul>
       </div>
       <div>
         <h3>Model</h3>
         <ul>
           <li>Ca. 5.000 hjertestop uden for hospital pr. år fordeles på beboerne; personer 60+ vægtes 7 gange højere.</li>
-          <li>Tid til første stød = den korteste af (2 min + hente og vende tilbage fra nærmeste døgntilgængelige hjertestarter, 110 m/min, ruteomvej 1,3) og ambulancens responstid.</li>
+          <li>Tid til første stød = den korteste af (2 min + hente og vende tilbage fra nærmeste døgntilgængelige hjertestarter, 110 m/min, ruteomvej 1,3) og (2 min + ambulancens responstid).</li>
+          <li>Responstid = <span id="m-ems"></span> · køretid ad vejnettet fra nærmeste ambulancebase. Konstanterne er tilpasset, så modellen rammer regionernes målte andel fremme inden for 5, 10 og 15 min (afvigelse <span id="m-rmse"></span>). Samme formel for by og land.</li>
           <li>Overlevelse ved stødbar rytme følger Valenzuela et al. 1997. 25 % af hjertestop antages stødbare.</li>
           <li>Hvert forslag vælges, så den samlede overlevelse stiger mest. Forslagene fordeles mellem by, mindre by og land efter andelen af hjertestop, så ethvert top-N udsnit har samme fordeling.</li>
         </ul>
@@ -353,7 +362,8 @@ footer { color: var(--ink-3); font-size: var(--step--1); border-top: 1px solid v
       <div>
         <h3>Forbehold</h3>
         <ul>
-          <li>Ambulancetiden er en antagelse pr. område (<span id="m-ems"></span>), da responstider pr. adresse ikke er offentlige.</li>
+          <li>Ambulancer holder ofte ikke på basen. Modellen giver den typiske responstid for stedet, ikke den enkelte udrykning. <span id="m-geo"></span> baser kendes kun på byniveau.</li>
+          <li>På små øer uden bro regnes ambulancen med færge; her er akutlægehelikopteren og lokale førstehjælpere ofte hurtigere.</li>
           <li>Afstande er luftlinje gange en fast omvejsfaktor. Modellen antager, at nogen henter hjertestarteren, når den er hurtigere end ambulancen.</li>
           <li>Befolkningen er bopælsbefolkning; steder med mange besøgende vises særskilt.</li>
           <li>Et forslag er et søgeområde på ca. 100 × 100 m. Den endelige placering kræver lokal vurdering.</li>
@@ -393,7 +403,11 @@ function renderFigures() {
   ];
   $("figures").innerHTML = items.map(([cls, b, s]) => `<div class="figure ${cls}"><b class="num">${b}</b><span>${s}</span></div>`).join("");
   $("m-aeds").textContent = fmt.format(S.hjertestartere_registreret);
-  $("m-ems").textContent = CL.map((c, i) => `${c.toLowerCase()} ${fmt.format(DATA.ems[i])} min`).join(", ");
+  const E = DATA.emsFit.params;
+  $("m-ems").textContent = `${fmt1.format(E.a)} min + ${fmt2.format(E.b)}`;
+  $("m-rmse").textContent = `${fmt1.format(100 * DATA.emsFit.rmse_andel)} %-point i gennemsnit`;
+  $("m-bases").textContent = fmt.format(DATA.bases.length);
+  $("m-geo").textContent = fmt.format(DATA.bases.filter((b) => b.geo === "by").length);
 }
 
 /* ---------- Map ---------- */
@@ -417,6 +431,7 @@ let outlineLayer;
 const popLayer = L.imageOverlay(DATA.raster.png, DATA.raster.bounds, { opacity: 0.8, interactive: false });
 const timeLayer = L.imageOverlay(DATA.accessRaster.png, DATA.accessRaster.bounds, { opacity: 0.9, interactive: false }).addTo(map);
 const aedLayer = L.layerGroup().addTo(map);
+const emsLayer = L.layerGroup().addTo(map);
 const siteLayer = L.layerGroup().addTo(map);
 const siteMarkers = new Map();
 const hoverRenderer = L.svg({ padding: 0.2 });
@@ -427,7 +442,7 @@ const siteHoverLayer = L.layerGroup().addTo(map);
 const MODEL = DATA.model;
 const tAed = (d) => MODEL.tAlarm + (2 * MODEL.route * d) / MODEL.speed;
 const surv = (t) => 1 / (1 + Math.exp(-(MODEL.valenzuela[0] - MODEL.valenzuela[1] * MODEL.tCpr - MODEL.valenzuela[2] * t)));
-const reach = (k) => (Math.max(0, DATA.ems[k] - MODEL.tAlarm) * MODEL.speed) / (2 * MODEL.route);
+const tEms = (resp) => resp + MODEL.tEmsExtra;
 const metres = (la1, lo1, la2, lo2) => Math.hypot((lo2 - lo1) * Math.cos((la1 * Math.PI) / 180) * 111320, (la2 - la1) * 110540);
 
 /* ---------- Rumligt opslag (grid-hash) ---------- */
@@ -503,28 +518,35 @@ let hoverFrame = 0, lastLatLng = null;
 function inspect(latlng) {
   const la = latlng.lat, lo = latlng.lng;
   const aed = nearest(aed247Ix, la, lo);
-  const cell = nearest(cellIx, la, lo, 3);
+  const cell = nearest(cellIx, la, lo, 12);
+  const C = DATA.cells;
   const inCell = cell && cell.d <= 177;
-  const k = cell && cell.d <= 3000 ? DATA.cells.k[cell.i] : 2;
+  const near = cell && cell.d <= 5000;
+  const k = near ? C.k[cell.i] : 2;
   const d = aed ? aed.d : Infinity;
-  const tA = tAed(d), tE = DATA.ems[k], t = Math.min(tA, tE);
+  const resp = near ? C.e[cell.i] : null;
+  const base = near ? DATA.bases[C.b[cell.i]] : null;
+  const tA = tAed(d), tE = near ? tEms(resp) : Infinity, t = Math.min(tA, tE);
   const kom = kommuneAt(la, lo);
   const ks = kom ? KOM_STATS.get(kom.name) : null;
-  const C = DATA.cells;
   inspector.getContainer().innerHTML = `
     <div class="in-place">${kom ? esc(kom.name) : "Uden for kommunerne"}</div>
-    <div class="in-sub">${esc(CL[k])} · ambulance antaget ${fmt.format(tE)} min</div>
-    <div class="in-time"><i style="background:${rampColor(t)}"></i><b class="num">${fmt1.format(t)} min</b><span class="in-sub">til første stød</span></div>
+    <div class="in-sub">${esc(CL[k])}${base ? ` · ambulance fra ${esc(base.n)}` : ""}</div>
+    <div class="in-time"><i style="background:${rampColor(t)}"></i><b class="num">${Number.isFinite(t) ? fmt1.format(t) + " min" : "–"}</b><span class="in-sub">til første stød</span></div>
     <div class="in-sub">${tA < tE ? "Hjertestarteren er hurtigst" : "Ambulancen er hurtigst – hjertestarteren er for langt væk"}</div>
     <dl>
       <dt>Nærmeste døgntilg. hjertestarter</dt><dd>${aed ? fmt.format(Math.round(d)) + " m" : "–"}</dd>
       <dt>Hente og vende tilbage</dt><dd>${aed ? fmt1.format(tA) + " min" : "–"}</dd>
-      <dt>Overlevelse ved stødbar rytme</dt><dd>${fmt.format(Math.round(100 * surv(t)))} %</dd>
+      <dt>Ambulancens responstid</dt><dd>${near ? fmt1.format(resp) + " min" : "–"}</dd>
+      <dt>Overlevelse ved stødbar rytme</dt><dd>${Number.isFinite(t) ? fmt.format(Math.round(100 * surv(t))) + " %" : "–"}</dd>
       <dt>Beboere i 250 m-felt</dt><dd>${inCell ? fmt.format(C.pop[cell.i]) + (C.pop60[cell.i] ? ` (${fmt.format(C.pop60[cell.i])} 60+)` : "") : "under 10"}</dd>
       ${ks ? `<dt>Kommunens median</dt><dd>${fmt1.format(ks.median_tid_til_stoed_min)} min</dd>` : ""}
     </dl>`;
   hoverLayer.clearLayers();
   const ink = tok("--ink");
+  if (base && $("lyr-ems").checked && map.getBounds().pad(0.5).contains([base.lat, base.lon])) {
+    L.polyline([[la, lo], [base.lat, base.lon]], { renderer: hoverRenderer, color: tok("--ems"), weight: 1.5, dashArray: "2 6", opacity: 0.9, interactive: false }).addTo(hoverLayer);
+  }
   if (aed && d < 6000) {
     const A = DATA.aeds;
     L.polyline([[la, lo], [A.lat[aed.i], A.lon[aed.i]]], { renderer: hoverRenderer, color: tok("--aed"), weight: 2, dashArray: "5 5", interactive: false }).addTo(hoverLayer);
@@ -589,6 +611,20 @@ function drawAeds() {
   }
 }
 
+const BASE_GEO = { adresse: "", vej: "Placeret på vejen; husnummeret findes ikke i OpenStreetMap.", by: "Kun byen er offentliggjort; vist i bymidten." };
+function drawBases() {
+  emsLayer.clearLayers();
+  if (!$("lyr-ems").checked) return;
+  const size = map.getZoom() >= 10 ? 14 : 10;
+  DATA.bases.forEach((b) => {
+    const icon = L.divIcon({ className: "mk", html: '<span class="mk-in mk-ems"></span>', iconSize: [size, size] });
+    const note = BASE_GEO[b.geo] ? `<span class="tt-s">${BASE_GEO[b.geo]}</span>` : "";
+    L.marker([b.lat, b.lon], { icon, keyboard: false, zIndexOffset: -1000 })
+      .bindTooltip(`<span class="tt-h">Ambulancebase · ${esc(b.n)}</span><span class="tt-s">${esc(b.op)} · ${esc(b.type)} · Region ${esc(b.reg)}</span>${note}`, { direction: "top", offset: [0, -size / 2 - 2], className: "tt" })
+      .addTo(emsLayer);
+  });
+}
+
 function rampColor(t) {
   const u = Math.max(0, Math.min(1, (t - DATA.accessRaster.tmin) / (DATA.accessRaster.tmax - DATA.accessRaster.tmin)));
   const stops = [[0, [251, 213, 197]], [0.5, [232, 102, 74]], [1, [143, 29, 13]]];
@@ -641,6 +677,7 @@ function popupHtml(tab, d) {
     ${d.pop60 !== undefined ? `<dt>Heraf 60+</dt><dd>${fmt.format(d.pop60)}</dd>` : ""}
     ${d.n100 !== undefined ? `<dt>Nye inden for 100 m</dt><dd>${fmt.format(d.n100)}</dd>` : ""}
     <dt>Tid til stød i dag (gns.)</dt><dd>${fmt1.format(d.tb)} min</dd>
+    <dt>Ambulancens responstid her</dt><dd>${fmt1.format(d.te)} min</dd>
     <dt>Ekstra overlevere/år, 2036</dt><dd>${fmt3.format(d.g36)}</dd>
     <dt>Over 10 år</dt><dd>≈ ${fmt2.format(d.g36 * 10)}</dd></dl>
     <div class="rec">${rec}</div><p style="margin-top:8px"><a href="${gm}" target="_blank" rel="noopener">Åbn i Google Maps</a></p></div>`;
@@ -659,7 +696,7 @@ function siteTip(d) {
   const place = active === "new" ? (d.type === "Bolig" ? "udendørs skab" : esc(d.host)) : (d.adg === "åbningstid" ? "har i dag åbningstid" : "står som utilgængelig");
   return `<span class="tt-h">${head}</span><span class="tt-s">${esc(d.kl)} · ${esc(d.kom)} · ${place}</span>` +
     `<b>${fmt.format(d.pop)}</b> beboere får kortere tid (i dag ${fmt1.format(d.tb)} min)<br>` +
-    `Hurtigere end ambulancen inden for <b>${fmt.format(Math.round(reach(kIndex(d.kl))))} m</b> · <b>+${fmt3.format(d.g36)}</b> overlevere/år`;
+    `Ambulance ca. ${fmt1.format(d.te)} min · hjertestarteren er hurtigst inden for <b>${fmt.format(d.rr)} m</b><br><b>+${fmt3.format(d.g36)}</b> overlevere/år`;
 }
 
 let hovered = null;
@@ -674,7 +711,7 @@ function highlight(r, on) {
   if (!on || active === "pub") return;
   const d = m.options.row;
   const color = tok(active === "up" ? "--upgrade" : "--new");
-  L.circle([d.lat, d.lon], { renderer: hoverRenderer, radius: reach(kIndex(d.kl)), color, weight: 1.5, dashArray: "4 4", fillColor: color, fillOpacity: 0.08, interactive: false }).addTo(siteHoverLayer);
+  L.circle([d.lat, d.lon], { renderer: hoverRenderer, radius: d.rr, color, weight: 1.5, dashArray: "4 4", fillColor: color, fillOpacity: 0.08, interactive: false }).addTo(siteHoverLayer);
   L.circle([d.lat, d.lon], { renderer: hoverRenderer, radius: 100, color, weight: 1, fill: false, opacity: 0.6, interactive: false }).addTo(siteHoverLayer);
 }
 function setHovered(r) {
@@ -756,15 +793,18 @@ $("lyr-pop").addEventListener("change", (e) => (e.target.checked ? popLayer.addT
 $("lyr-time").addEventListener("change", (e) => (e.target.checked ? timeLayer.addTo(map) : timeLayer.remove()));
 $("lyr-kom").addEventListener("change", buildBase);
 $("lyr-aed").addEventListener("change", drawAeds);
+$("lyr-ems").addEventListener("change", () => { drawBases(); if (lastLatLng) inspect(lastLatLng); });
 $("lyr-ortho").addEventListener("change", (e) => {
   if (e.target.checked) { ortho.addTo(map); } else { ortho.remove(); $("ortho-note").hidden = true; }
   buildBase();
 });
-let lastZoomBand = null;
+let lastZoomBand = null, lastEmsBand = null;
 map.on("moveend", () => {
   drawAeds();
   const band = map.getZoom() >= 12;
   if (band !== lastZoomBand) { lastZoomBand = band; drawSites(); }
+  const emsBand = map.getZoom() >= 10;
+  if (emsBand !== lastEmsBand) { lastEmsBand = emsBand; drawBases(); }
 });
 
 /* ---------- By og land ---------- */
@@ -786,7 +826,7 @@ function renderFairness() {
     ["Median afstand til døgntilg. hjertestarter", (r) => fmt.format(Math.round(r.median_afstand_m)) + " m"],
     ["Bor ≤100 m fra en", (r) => fmt1.format(r.daekning_100m_pct) + " %"],
     ["Bor ≤500 m fra en", (r) => fmt1.format(r.daekning_500m_pct) + " %"],
-    ["Antaget ambulancetid", (r, i) => fmt.format(DATA.ems[i]) + " min"],
+    ["Median responstid, ambulance", (r) => fmt1.format(r.median_ambulance_responstid_min) + " min"],
     ["Median tid til første stød", (r) => fmt1.format(r.median_tid_til_stoed_min) + " min"],
     ["Overlevelse ved stødbar rytme", (r) => fmt1.format(r.overlevelse_stoedbar_pct) + " %"],
   ];
@@ -845,6 +885,7 @@ const KCOLS = [
   ["befolkning", "Indbyggere", (k) => fmt.format(Math.round(k.befolkning))],
   ["andel_land_pct", "Andel på landet", (k) => fmt.format(Math.round(k.andel_land_pct)) + " %"],
   ["median_tid_til_stoed_min", "Median tid til stød", (k) => `<span class="${k.median_tid_til_stoed_min >= 10 ? "slow" : ""}">${fmt1.format(k.median_tid_til_stoed_min)} min</span>`],
+  ["median_ambulance_responstid_min", "Ambulance (median)", (k) => fmt1.format(k.median_ambulance_responstid_min) + " min"],
   ["daekning_100m_pct", "≤100 m", (k) => fmt1.format(k.daekning_100m_pct) + " %"],
   ["daekning_500m_pct", "≤500 m", (k) => `<span class="bar"><span><i style="width:${k.daekning_500m_pct}%"></i></span>${fmt.format(Math.round(k.daekning_500m_pct))} %</span>`],
   ["døgntilgængelige", "Døgntilg. hjertestartere", (k) => fmt.format(k["døgntilgængelige"])],
@@ -880,6 +921,7 @@ function boot() {
   renderMilestones();
   renderKommuner();
   drawAeds();
+  drawBases();
 }
 boot();
 const retheme = () => { buildBase(); drawAeds(); if (lastLatLng) inspect(lastLatLng); };

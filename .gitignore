@@ -6,6 +6,9 @@ __pycache__/
 data/raw/*
 !data/raw/aeds.csv
 !data/raw/dst_folk1a_kommuner.csv
+!data/raw/ambulancebaser.csv
+!data/raw/responstider_regioner.csv
+!data/raw/responstider_syddanmark_kommuner.csv
 data/processed/
 # Samme side som docs/index.html
 output/hjertestarter_blindspots.html

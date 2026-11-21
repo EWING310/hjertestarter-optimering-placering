@@ -19,6 +19,8 @@ from PIL import Image
 from pyproj import Transformer
 
 from src import config
+from src.ambulance import load_bases
+from src.ems_model import PARAMS_JSON
 from src.population import load_municipalities
 
 TEMPLATE = config.ROOT / "src" / "web" / "template.html"
@@ -113,7 +115,13 @@ def access_cells(access: pd.DataFrame) -> dict:
     return {
         "lat": _r(a["lat"], 5), "lon": _r(a["lon"], 5), "pop": _r(a["pop"], 0), "pop60": _r(a["pop60"], 0),
         "t": _r(a["t"], 1), "d": _r(a["d"], 0), "k": a["klasse"].astype(int).tolist(),
+        "e": _r(a["e"], 1), "b": a["base_idx"].astype(int).tolist(),
     }
+
+
+def base_layer(bases: pd.DataFrame) -> list[dict]:
+    cols = {"navn": "n", "region": "reg", "operatoer": "op", "basetype": "type", "geokodning": "geo", "lat": "lat", "lon": "lon"}
+    return bases[list(cols)].rename(columns=cols).round({"lat": 5, "lon": 5}).to_dict("records")
 
 
 PROPOSAL_COLS = {
@@ -121,6 +129,7 @@ PROPOSAL_COLS = {
     "ekstra_overlevere_pr_aar": "g", "ekstra_overlevere_pr_aar_2036": "g36", "beboere_kortere_tid": "pop",
     "heraf_60plus": "pop60", "nye_beboere_inden_for_100m": "n100", "tid_til_stoed_foer_min": "tb",
     "kommune": "kom", "foreslaaet_vaert": "host", "vaert_type": "type", "vaert_adresse": "addr",
+    "ambulance_responstid_min": "te", "hurtigere_end_ambulancen_inden_for_m": "rr",
 }
 
 
@@ -134,7 +143,7 @@ def conversion_records(c: pd.DataFrame) -> list[dict]:
     cols = {
         "rang": "r", "klasse": "kl", "lat": "lat", "lon": "lon", "kommune": "kom", "nuvaerende_adgang": "adg",
         "ekstra_overlevere_pr_aar": "g", "ekstra_overlevere_pr_aar_2036": "g36", "beboere_kortere_tid": "pop",
-        "tid_til_stoed_foer_min": "tb",
+        "tid_til_stoed_foer_min": "tb", "ambulance_responstid_min": "te", "hurtigere_end_ambulancen_inden_for_m": "rr",
     }
     return c.head(500)[list(cols)].rename(columns=cols).to_dict("records")
 
@@ -152,8 +161,8 @@ def build_data() -> dict:
     proposals = pd.read_csv(out / "forslag_nye_hjertestartere.csv", keep_default_na=False)
     efficient = pd.read_csv(proc / "uden_kvote.csv")
     kommuner = pd.read_csv(out / "kommuner_ranking.csv")
-    kom_cols = ["kommune", "befolkning", "andel_land_pct", "median_tid_til_stoed_min", "daekning_100m_pct",
-                "daekning_500m_pct", "døgntilgængelige", "forventede_overlevere_pr_aar", "vaekst_60plus"]
+    kom_cols = ["kommune", "befolkning", "andel_land_pct", "median_tid_til_stoed_min", "median_ambulance_responstid_min",
+                "daekning_100m_pct", "daekning_500m_pct", "døgntilgængelige", "forventede_overlevere_pr_aar", "vaekst_60plus"]
     return {
         "summary": json.loads((out / "summary.json").read_text()),
         "curve": _r(proposals["ekstra_overlevere_pr_aar_2036"].cumsum(), 3),
@@ -163,9 +172,11 @@ def build_data() -> dict:
         "public": public_records(pd.read_csv(out / "offentlige_steder_uden_hjertestarter.csv", dtype={"postnr": str}, keep_default_na=False)),
         "kommuner": kommuner[kom_cols].round(3).to_dict("records"),
         "classes": list(config.URBAN_CLASSES),
-        "ems": list(config.EMS_MIN_BY_CLASS),
+        "bases": base_layer(load_bases()),
+        "emsFit": json.loads(PARAMS_JSON.read_text()),
         "model": {
             "tAlarm": config.T_ALARM_MIN,
+            "tEmsExtra": config.T_EMS_EXTRA_MIN,
             "speed": config.RETRIEVE_SPEED_M_PER_MIN,
             "route": config.ROUTE_FACTOR,
             "tCpr": config.T_CPR_MIN,

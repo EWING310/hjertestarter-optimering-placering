@@ -62,9 +62,10 @@
       "daekning_100m_pct": 34.12,
       "daekning_500m_pct": 99.16,
       "median_afstand_m": 134.51,
+      "median_ambulance_responstid_min": 5.92,
       "median_tid_til_stoed_min": 5.18,
-      "overlevelse_stoedbar_pct": 34.7,
-      "forventede_overlevere_pr_aar": 113.07,
+      "overlevelse_stoedbar_pct": 33.1,
+      "forventede_overlevere_pr_aar": 107.86,
       "andel_af_hjertestop_pct": 26.74
     },
     {
@@ -76,9 +77,10 @@
       "daekning_100m_pct": 22.49,
       "daekning_500m_pct": 96.85,
       "median_afstand_m": 176.88,
-      "median_tid_til_stoed_min": 6.18,
-      "overlevelse_stoedbar_pct": 31.49,
-      "forventede_overlevere_pr_aar": 144.75,
+      "median_ambulance_responstid_min": 6.15,
+      "median_tid_til_stoed_min": 6.14,
+      "overlevelse_stoedbar_pct": 31.32,
+      "forventede_overlevere_pr_aar": 143.95,
       "andel_af_hjertestop_pct": 36.77
     },
     {
@@ -90,9 +92,10 @@
       "daekning_100m_pct": 9.77,
       "daekning_500m_pct": 57.15,
       "median_afstand_m": 391.76,
-      "median_tid_til_stoed_min": 11.0,
-      "overlevelse_stoedbar_pct": 24.36,
-      "forventede_overlevere_pr_aar": 113.17,
+      "median_ambulance_responstid_min": 8.73,
+      "median_tid_til_stoed_min": 8.92,
+      "overlevelse_stoedbar_pct": 24.71,
+      "forventede_overlevere_pr_aar": 114.8,
       "andel_af_hjertestop_pct": 36.5
     }
   ],
@@ -103,9 +106,9 @@
   },
   "effekt_med_kvote": {
     "50": {
-      "ekstra_overlevere_pr_aar": 0.79,
-      "ekstra_overlevere_pr_aar_2036": 0.89,
-      "beboere_kortere_tid": 58338,
+      "ekstra_overlevere_pr_aar": 1.05,
+      "ekstra_overlevere_pr_aar_2036": 1.17,
+      "beboere_kortere_tid": 56511,
       "fordeling": {
         "By": 13,
         "Mindre by/forstad": 19,
@@ -113,9 +116,9 @@
       }
     },
     "100": {
-      "ekstra_overlevere_pr_aar": 1.41,
-      "ekstra_overlevere_pr_aar_2036": 1.58,
-      "beboere_kortere_tid": 105043,
+      "ekstra_overlevere_pr_aar": 1.86,
+      "ekstra_overlevere_pr_aar_2036": 2.06,
+      "beboere_kortere_tid": 102421,
       "fordeling": {
         "By": 27,
         "Mindre by/forstad": 37,
@@ -123,9 +126,9 @@
       }
     },
     "250": {
-      "ekstra_overlevere_pr_aar": 2.95,
-      "ekstra_overlevere_pr_aar_2036": 3.28,
-      "beboere_kortere_tid": 219949,
+      "ekstra_overlevere_pr_aar": 3.81,
+      "ekstra_overlevere_pr_aar_2036": 4.22,
+      "beboere_kortere_tid": 217481,
       "fordeling": {
         "By": 67,
         "Mindre by/forstad": 92,
@@ -133,9 +136,9 @@
       }
     },
     "500": {
-      "ekstra_overlevere_pr_aar": 5.08,
-      "ekstra_overlevere_pr_aar_2036": 5.61,
-      "beboere_kortere_tid": 369506,
+      "ekstra_overlevere_pr_aar": 6.37,
+      "ekstra_overlevere_pr_aar_2036": 7.03,
+      "beboere_kortere_tid": 369126,
       "fordeling": {
         "By": 134,
         "Mindre by/forstad": 184,
@@ -143,9 +146,9 @@
       }
     },
     "1000": {
-      "ekstra_overlevere_pr_aar": 8.58,
-      "ekstra_overlevere_pr_aar_2036": 9.44,
-      "beboere_kortere_tid": 611751,
+      "ekstra_overlevere_pr_aar": 10.5,
+      "ekstra_overlevere_pr_aar_2036": 11.57,
+      "beboere_kortere_tid": 621633,
       "fordeling": {
         "By": 267,
         "Mindre by/forstad": 368,
@@ -153,9 +156,9 @@
       }
     },
     "2000": {
-      "ekstra_overlevere_pr_aar": 14.22,
-      "ekstra_overlevere_pr_aar_2036": 15.58,
-      "beboere_kortere_tid": 992282,
+      "ekstra_overlevere_pr_aar": 16.94,
+      "ekstra_overlevere_pr_aar_2036": 18.61,
+      "beboere_kortere_tid": 1018015,
       "fordeling": {
         "By": 535,
         "Mindre by/forstad": 735,
@@ -165,63 +168,63 @@
   },
   "effekt_uden_kvote": {
     "50": {
-      "ekstra_overlevere_pr_aar": 0.8,
-      "ekstra_overlevere_pr_aar_2036": 0.9,
-      "beboere_kortere_tid": 62092,
+      "ekstra_overlevere_pr_aar": 1.14,
+      "ekstra_overlevere_pr_aar_2036": 1.28,
+      "beboere_kortere_tid": 78463,
       "fordeling": {
-        "By": 18,
-        "Mindre by/forstad": 10,
-        "Land": 22
+        "By": 36,
+        "Mindre by/forstad": 9,
+        "Land": 5
       }
     },
     "100": {
-      "ekstra_overlevere_pr_aar": 1.42,
-      "ekstra_overlevere_pr_aar_2036": 1.58,
-      "beboere_kortere_tid": 108060,
+      "ekstra_overlevere_pr_aar": 1.96,
+      "ekstra_overlevere_pr_aar_2036": 2.19,
+      "beboere_kortere_tid": 128777,
       "fordeling": {
-        "By": 32,
-        "Mindre by/forstad": 27,
-        "Land": 41
+        "By": 59,
+        "Mindre by/forstad": 28,
+        "Land": 13
       }
     },
     "250": {
-      "ekstra_overlevere_pr_aar": 2.96,
-      "ekstra_overlevere_pr_aar_2036": 3.28,
-      "beboere_kortere_tid": 211221,
+      "ekstra_overlevere_pr_aar": 3.96,
+      "ekstra_overlevere_pr_aar_2036": 4.4,
+      "beboere_kortere_tid": 252187,
       "fordeling": {
-        "By": 58,
-        "Mindre by/forstad": 91,
-        "Land": 101
+        "By": 125,
+        "Mindre by/forstad": 92,
+        "Land": 33
       }
     },
     "500": {
-      "ekstra_overlevere_pr_aar": 5.12,
-      "ekstra_overlevere_pr_aar_2036": 5.64,
-      "beboere_kortere_tid": 355181,
+      "ekstra_overlevere_pr_aar": 6.57,
+      "ekstra_overlevere_pr_aar_2036": 7.29,
+      "beboere_kortere_tid": 428219,
       "fordeling": {
-        "By": 99,
-        "Mindre by/forstad": 219,
-        "Land": 182
+        "By": 258,
+        "Mindre by/forstad": 171,
+        "Land": 71
       }
     },
     "1000": {
-      "ekstra_overlevere_pr_aar": 8.69,
-      "ekstra_overlevere_pr_aar_2036": 9.54,
-      "beboere_kortere_tid": 580434,
+      "ekstra_overlevere_pr_aar": 10.74,
+      "ekstra_overlevere_pr_aar_2036": 11.87,
+      "beboere_kortere_tid": 688494,
       "fordeling": {
-        "By": 165,
-        "Mindre by/forstad": 471,
-        "Land": 364
+        "By": 436,
+        "Mindre by/forstad": 367,
+        "Land": 197
       }
     },
     "2000": {
-      "ekstra_overlevere_pr_aar": 14.41,
-      "ekstra_overlevere_pr_aar_2036": 15.77,
-      "beboere_kortere_tid": 950571,
+      "ekstra_overlevere_pr_aar": 17.17,
+      "ekstra_overlevere_pr_aar_2036": 18.92,
+      "beboere_kortere_tid": 1101103,
       "fordeling": {
-        "By": 316,
-        "Mindre by/forstad": 974,
-        "Land": 710
+        "By": 786,
+        "Mindre by/forstad": 766,
+        "Land": 448
       }
     }
   },
@@ -242,6 +245,28 @@
       "Land": 60
     }
   },
-  "forventede_overlevere_pr_aar_i_dag": 371.0,
+  "ambulance": {
+    "baser": 186,
+    "baser_pr_region": {
+      "Midtjylland": 55,
+      "Syddanmark": 47,
+      "Sjælland": 36,
+      "Nordjylland": 26,
+      "Hovedstaden": 22
+    },
+    "geokodning": {
+      "adresse": 121,
+      "by": 55,
+      "vej": 10
+    },
+    "model": {
+      "a": 3.5226,
+      "b": 0.628,
+      "sigma": 0.3583
+    },
+    "rmse_andel": 0.038,
+    "t_ekstra_min": 2.0
+  },
+  "forventede_overlevere_pr_aar_i_dag": 366.6,
   "offentlige_steder_uden_hjertestarter_100m": 3789
 }

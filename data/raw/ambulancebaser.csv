@@ -1,0 +1,187 @@
+region,navn,adresse,postnr,by,operatoer,basetype,beredskab,kilde
+Nordjylland,Brønderslev,Sdr. Omfartsvej 1,,Brønderslev,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Dronninglund,Slotsgade 38,,Dronninglund,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Frederikshavn,H.C. Ørstedsvej 35,,Frederikshavn,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Hirtshals,Safirvej 11,,Hirtshals,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Hjørring,Frederikshavnvej 33,,Hjørring,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Læsø,Byrum Hovedgade 19,,Byrum,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Løkken,Industrivej 9,,Løkken,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Nibe,Søndergade 47,,Nibe,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Nørresundby,Bouet Møllevej 16,,Nørresundby,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Pandrup,Stormgade 4,,Pandrup,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Skagen,Kattegatvej 3,,Skagen,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Sæby,Aalborgvej 95,,Sæby,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Aalborg,Håndværkervej 27,,Aalborg,Region Nordjylland,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Brovst,Stationsvej 20,,Brovst,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Farsø,Søndergården 4,,Farsø,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Fjerritslev,Mågevej 14,,Fjerritslev,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Hadsund,Østergade 70,,Hadsund,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Hobro,Sjællandsvej 9,,Hobro,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Hurup Thy,Industrivej 14,,Hurup,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Løgstør,Aarsvej 5,,Løgstør,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Nykøbing Mors,Elsøvej 107,,Nykøbing Mors,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Støvring,Vestre Primærvej 9,,Støvring,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Terndrup,Mølledamsvej 8,,Terndrup,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Thisted,Fabriksvej 4,,Thisted,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Vilsund,Rævebakken 5,7752,Vilsund Vest,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Nordjylland,Aars,Industrivej 52,,Aars,PreMed,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-er-de-nye-nordjyske-ambulancestationer-placeret/
+Syddanmark,Aarup,Holmelund 32,5560,Aarup,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Assens,Fåborgvej 16,5610,Assens,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Bogense,Sjællandsvej 2,5400,Bogense,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Dalum,Sivlandsvænget 15,5260,Odense S,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Fåborg,"Markedspladsen 15, st. tv.",5600,Fåborg,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Glamsbjerg,Fredensvej 36,5620,Glamsbjerg,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Kerteminde,Strandvangen 3,5300,Kerteminde,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Nyborg,Ladegårdsvej 4,5800,Nyborg,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Odense C,Kildemosevej 15,5000,Odense C,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Otterup,Strandvejen 55,5450,Otterup,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Ringe,Selagervej 1,5750,Ringe,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Rudkøbing,Ellehaven 4F,5900,Rudkøbing,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Sallinge,Sallinge Ågade 20,5750,Ringe,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Svendborg,Grønnemosevej 9,5700,Svendborg,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Ærø,Dunkærgade 18,5970,Ærøskøbing,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Agerbæk,Nørremarken 3,6753,Agerbæk,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Bramming,Industrivej 52,6740,Bramming,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Esbjerg,Falkevej 14,6705,Esbjerg Ø,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Holsted,Vestergade 27,6670,Holsted,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Fanø,Sønder Nytoft 19,6720,Fanø,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Nr. Nebel,Byagervej 4,6830,Nr. Nebel,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Oksbøl,Strandvejen 1A,6840,Oksbøl,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Ribe,Ørstedsvej 43,6760,Ribe,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Rødding,Louisevej 13,6630,Rødding,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Billund,Billund lufthavn,7190,Billund,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Grindsted,Odinsvej 9,7200,Grindsted,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Varde,Nordre Boulevard 73,6800,Varde,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Ølgod,Industrivej 3,6870,Ølgod,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Vejen,Ådalen 7F,6600,Vejen,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Aabenraa,Pilemosen 19,6200,Aabenraa,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Skærbæk,Søndervang 19,6780,Skærbæk,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Haderslev,Norgesvej 2,6100,Haderslev,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Kruså,Skovglimt 6,6340,Kruså,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Løgumkloster,Aabenraavej 41,6240,Løgumkloster,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Sønderborg,Ingolf Nielsens vej 14,6400,Sønderborg,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Tinglev,Hovedgaden 110B,6360,Tinglev,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Toftlund,Ærøvej 2,6520,Toftlund,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Tønder,Nordre Industrivej 5A,6270,Tønder,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Vojens,Tingvejen 30B,6500,Vojens,Ambulance Syd,Station,Ambulance,https://praehospitalsyd.dk/omrader/ambulance-syd/ambulancestationer-i-praehospital-syd
+Syddanmark,Give,Nørregade 29,7323,Give,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/tre-ambulancestationer-skifter-placering-i-ny-kontrakt/
+Syddanmark,Ejby,Anlægsvej 3,5592,Ejby,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/tre-ambulancestationer-skifter-placering-i-ny-kontrakt/
+Syddanmark,Egtved,Lergårdvej 7,6040,Egtved,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/tre-ambulancestationer-skifter-placering-i-ny-kontrakt/
+Syddanmark,Christiansfeld,Nørregade 12,6070,Christiansfeld,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/tre-ambulancestationer-skifter-placering-i-ny-kontrakt/
+Syddanmark,Middelfart,Mandal Allé 19,5500,Middelfart,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/tre-ambulancestationer-skifter-placering-i-ny-kontrakt/
+Syddanmark,Kolding,Albuen 10,6000,Kolding,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/tre-ambulancestationer-skifter-placering-i-ny-kontrakt/
+Syddanmark,Vejle,Hjulmagervej 3A-B,7100,Vejle,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/tre-ambulancestationer-skifter-placering-i-ny-kontrakt/
+Syddanmark,Fredericia,Vejlevej 119,7000,Fredericia,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/tre-ambulancestationer-skifter-placering-i-ny-kontrakt/
+Midtjylland,Allingåbro,A L Pedersensvej 3,8961,Allingåbro,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Aulum,Industrivej Syd 1,7490,Aulum,Falck,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Balling,Søndergade 13b,7860,Spøttrup,Falck,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Bjerringbro,Vestergade 101,8850,Bjerringbro,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Brande,Brandlundvej 25,7330,Brande,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Brædstrup,Vestervangen 5G,8740,Brædstrup,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Durup,Vilholmvej 4A,7870,Roslev,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Ebeltoft,Falcksvej 1,8400,Ebeltoft,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Galten,Marktoften 1,8464,Galten,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Gjesing,Gammel Horsensvej 403,8660,Skanderborg,Præhospitalet,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Glesborg,Laenvej 29-31,8585,Glesborg,Præhospitalet,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Grenå, Sundhedshuset",Kløvervang 69-71,8500,Grenå,Præhospitalet,Fast base,Ambulance og paramedicinerbil,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Hammel,Ny Tilemannsvej 2,8450,Hammel,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Hedensted,Lundagervej 16b,8722,Hedensted,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Herning, H.P. Hansens Vej",H.P. Hansens Vej 112,7400,Herning,Falck,Fast base,Ambulance og paramedicinerbil,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Herning, Knudsvej",Knudsvej 2,7400,Herning,Præhospitalet,Fast base,"Ambulance, paramedicinerbil og akutlægebil",https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Hinnerup,Samsøvej 2,8382,Hinnerup,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Holstebro, Stationsvej",Stationsvej 31,7500,Holstebro,Præhospitalet,Fast base,Ambulance og akutlægebil,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Holstebro, Frøjkvej",Frøjkvej 2,7500,Holstebro,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Hornslet,Falcksvej 2,8543,Hornslet,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Hornsyld,Søndergade 18,8783,Hornsyld,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Horsens,Sverigesvej 17C,8700,Horsens,Præhospitalet,Fast base,"Sygetransport, ambulance, akutlægebil og paramedicinerbil",https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Hvide Sande,Nørregade 84,6960,Hvide Sande,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Ikast,Kirkegade 104,7430,Ikast,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Karup,Gl. Banevej 19,7470,Karup J,Falck,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Kjellerup,Søndergade 69,8620,Kjellerup,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Kolind,Romlehøjvej 5,8560,Kolind,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Langå,Wethvej 1B,8870,Langå,Præhospitalet,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Lemvig, Vangevej",Vangevej 8,7629,Lemvig,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Lemvig, Sundhedshuset",Østergade 30,7620,Lemvig,Præhospitalet,Fast base,Paramedicinerbil,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Nørre Snede,Falkevej 2,8766,Nørre Snede,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Odder,Rønhøjvej 7,8300,Odder,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Randers N,Skovlyvej 15,8930,Randers NØ,Præhospitalet,Fast base,Ambulance og Akutlægebil,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Randers S,Ribevej 3,8940,Randers SV,Præhospitalet,Fast base,"Ambulance, paramedicinerbil og sygetransport",https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Ringkøbing, Vester Strandsbjerg",Vester Strandsbjerg 25,6950,Ringkøbing,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Ringkøbing, Sundhedshuset",Nørreport 18,6950,Ringkøbing,Præhospitalet,Fast base,Paramedicinerbil,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Ry,Brunhøjvej 13,8680,Ry,Præhospitalet,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Rønde,Bækkelundsvej 2,8410,Rønde,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Silkeborg,Kejlstrupvej 99D,8600,Silkeborg,Præhospitalet,Fast base,Ambulance og Akutlægebil,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Skanderborg,Vestergade 131,8660,Skanderborg,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Skive,Engvej 4-6,7800,Skive,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Struer,Bredgade 71,7600,Struer,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Sdr. Felding,Bjergvej 24,7280,Sdr. Felding,Falck,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Tarm,Nørremarksvej 2,6880,Tarm,Falck,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Tranebjerg,Industrivej 25,8305,Samsø,Samsø Redningskorps,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Ulfborg,Torstedvej 4-8,6990,Ulfborg,Falck,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Viborg,Fabrikvej 5,8800,Viborg,Falck,Fast base,Ambulance og Akutlægebil,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Videbæk,Nygade 8,6920,Videbæk,Falck,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Vinderup,Nr. Bjertvej 17,7830,Vinderup,Falck,Fremskudt base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Aarhus C,Ny Munkegade 15,8000,Aarhus C,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Aarhus N, Olof Palmes Allé",Olof Palmes Allé 32,8200,Aarhus N,Præhospitalet,Fast base,Ambulance og Akutlægebil,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,"Aarhus, Risskov",Stokagervej 8A,8240,Risskov,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Aarhus S,Søren Nymarks Vej 4 H,8270,Højbjerg,Præhospitalet,Fast base,Ambulance,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Aarhus V,Bautavej 5,8210,Aarhus V,Præhospitalet,Fast base,Ambulance og paramedicinerbil,https://www.ph.rm.dk/omraader/her-ligger-baserne/
+Midtjylland,Tunø,,8799,Tunø By,Samsø Redningskorps,Station,Ambulance,https://www.openstreetmap.org/node/9350831027
+Sjælland,Faxe,,,Faxe,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Greve,,,Greve,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Hårlev,,,Hårlev,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Køge,,,Køge,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Store Heddinge,,,Store Heddinge,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Hvalsø,,,Hvalsø,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Haslev,,,Haslev,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Præstø,,,Præstø,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Ringsted,,,Ringsted,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Stege,,,Stege,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Vordingborg,,,Vordingborg,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Maribo,,,Maribo,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Nakskov,,,Nakskov,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Nykøbing Falster,,,Nykøbing Falster,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Sakskøbing,,,Sakskøbing,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Nørre Alslev,,,Nørre Alslev,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Nykøbing Sjælland,,,Nykøbing Sjælland,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Holbæk,,,Holbæk,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Kalundborg,,,Kalundborg,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Næstved,,,Næstved,Ambulance Sjælland,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Nykøbing Sjælland,,,Nykøbing Sjælland,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Asnæs,,,Asnæs,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Holbæk,,,Holbæk,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Kalundborg,,,Kalundborg,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Jyderup,,,Jyderup,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Kirke Hyllinge,,,Kirke Hyllinge,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Jyllinge,,,Jyllinge,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Roskilde,,,Roskilde,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Gørlev,,,Gørlev,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Dianalund,,,Dianalund,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Slagelse,,,Slagelse,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Sorø,,,Sorø,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Korsør,,,Korsør,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Fuglebjerg,,,Fuglebjerg,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Skælskør,,,Skælskør,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Sjælland,Næstved,,,Næstved,Falck,Base,Ambulance,https://www.regionsjaelland.dk/sundhed/akuthjaelp/akutberedskabet/ambulance-sjaelland/ambulancebaser
+Hovedstaden,Tårnby,Løjtegårdsvej 161,2770,Kastrup,Region Hovedstaden/Falck,Hovedbase,Ambulance,https://www.beredskabsinfo.dk/praehospital/store-aendringer-for-ambulancestationerne-i-region-hovedstaden/
+Hovedstaden,Hvidovre,Avedøre Havnevej 35,2650,Hvidovre,Region Hovedstaden/Falck,Hovedbase,Ambulance,https://www.beredskabsinfo.dk/praehospital/store-aendringer-for-ambulancestationerne-i-region-hovedstaden/
+Hovedstaden,Gladsaxe,Vandtårnsvej 59,2860,Søborg,Region Hovedstaden/Falck,Hovedbase,Ambulance,https://www.beredskabsinfo.dk/praehospital/store-aendringer-for-ambulancestationerne-i-region-hovedstaden/
+Hovedstaden,Hillerød,Heimdalsvej 1,3400,Hillerød,Region Hovedstaden/Falck,Hovedbase,Ambulance,https://www.beredskabsinfo.dk/praehospital/store-aendringer-for-ambulancestationerne-i-region-hovedstaden/
+Hovedstaden,Kokkedal,Brønsholm Kongevej 25,2980,Kokkedal,Region Hovedstaden/Falck,Hovedbase,Ambulance,https://www.beredskabsinfo.dk/praehospital/store-aendringer-for-ambulancestationerne-i-region-hovedstaden/
+Hovedstaden,Gentofte,,,Gentofte,Region Hovedstaden/Falck,Fremskudt base (sove),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Taastrup,,,Taastrup,Region Hovedstaden/Falck,Fremskudt base (sove),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Farum,,,Farum,Region Hovedstaden/Falck,Fremskudt base (sove),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Egedal,,,Stenløse,Region Hovedstaden/Falck,Fremskudt base (sove),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Frederikssund,,,Frederikssund,Region Hovedstaden/Falck,Fremskudt base (sove),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Jægerspris,,,Jægerspris,Region Hovedstaden/Falck,Fremskudt base (sove),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Frederiksværk,,,Frederiksværk,Region Hovedstaden/Falck,Fremskudt base (sove),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Helsinge,,,Helsinge,Region Hovedstaden/Falck,Fremskudt base (sove),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Gilleleje,,,Gilleleje,Region Hovedstaden/Falck,Fremskudt base (sove),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Helsingør,,,Helsingør,Region Hovedstaden/Falck,Fremskudt base (sove),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Ballerup,,,Ballerup,Region Hovedstaden/Falck,Fremskudt base (hvile),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Sydhavnen,,,Sydhavnen,Region Hovedstaden/Falck,Fremskudt base (hvile),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Bispeengbuen,Bispeengbuen,,København,Region Hovedstaden/Falck,Fremskudt base (hvile),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Tagensvej,Tagensvej,,København,Region Hovedstaden/Falck,Fremskudt base (hvile),Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Rønne,,,Rønne,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Nexø,,,Nexø,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/
+Hovedstaden,Klemensker,,,Klemensker,Falck,Station,Ambulance,https://www.beredskabsinfo.dk/praehospital/her-placeres-region-hovedstadens-ambulancer-fra-naeste-aar/

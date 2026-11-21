@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from src.survival import reach_radius, survival, time_to_aed, time_to_defib
+from src.survival import reach_radius, survival, time_to_aed, time_to_defib, time_to_ems
 
 
 @pytest.mark.unit
@@ -32,3 +32,15 @@ def test_reach_radius_is_where_aed_stops_beating_ambulance():
     r = reach_radius(np.array([8.0]))
 
     assert time_to_aed(r)[0] == pytest.approx(8.0)
+
+
+@pytest.mark.unit
+def test_time_to_ems_adds_alarm_time_to_response():
+    assert time_to_ems(np.array([8.0]))[0] == pytest.approx(10.0)
+
+
+@pytest.mark.unit
+def test_aed_and_ambulance_tie_exactly_at_reach_radius():
+    t_ems = time_to_ems(np.array([7.5]))
+
+    assert time_to_aed(reach_radius(t_ems))[0] == pytest.approx(t_ems[0])

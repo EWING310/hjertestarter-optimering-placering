@@ -13,6 +13,11 @@ def time_to_aed(dist_m: np.ndarray) -> np.ndarray:
     return config.T_ALARM_MIN + round_trip / config.RETRIEVE_SPEED_M_PER_MIN
 
 
+def time_to_ems(response_min: np.ndarray) -> np.ndarray:
+    """Minutter fra hjertestop til ambulancens første stød, givet responstiden fra 112-opkaldet."""
+    return np.asarray(response_min, dtype=float) + config.T_EMS_EXTRA_MIN
+
+
 def time_to_defib(dist_m: np.ndarray, t_ems: np.ndarray) -> np.ndarray:
     """Første stød kommer fra den hurtigste af nærmeste hjertestarter og ambulancen."""
     return np.minimum(time_to_aed(dist_m), t_ems)
