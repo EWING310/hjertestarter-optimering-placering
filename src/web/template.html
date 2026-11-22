@@ -342,7 +342,7 @@ footer { color: var(--ink-3); font-size: var(--step--1); border-top: 1px solid v
         <h3>Data</h3>
         <ul>
           <li>Hjertestartere: alle <span class="num" id="m-aeds"></span> offentligt viste registreringer i <a href="https://www.hjertestarter.dk/find-hjertestarter" target="_blank" rel="noopener">Dansk Hjertestarterregister</a>, hentet 19.11.2026.</li>
-          <li>Befolkning: GHSL GHS-POP 2025 (100 m), kalibreret pr. kommune til Danmarks Statistik FOLK1A. Andel 60+ fra Meta HRSL 2020.</li>
+          <li>Befolkning: GHSL GHS-POP 2025 (100 m), kalibreret pr. kommune til Danmarks Statistik FOLK1A. Beboere i industri-, havne- og jernbaneområder (OpenStreetMap) er flyttet til kommunens boligområder. Andel 60+ fra Meta HRSL 2020.</li>
           <li>Fremtid: DST befolkningsfremskrivning FRKM126 (2026 → 2036).</li>
           <li>By og land: GHSL-SMOD 2025, EU/FN's urbaniseringsgrad (DEGURBA) på 1 km.</li>
           <li>Ambulancer: <span class="num" id="m-bases"></span> baser fra regionernes og operatørernes egne oversigter, geokodet mod adresserne i OpenStreetMap. Responstider: Danske Regioner (pr. region) og Region Syddanmark (pr. kommune), 2025–26.</li>
@@ -365,7 +365,7 @@ footer { color: var(--ink-3); font-size: var(--step--1); border-top: 1px solid v
           <li>Ambulancer holder ofte ikke på basen. Modellen giver den typiske responstid for stedet, ikke den enkelte udrykning. <span id="m-geo"></span> baser kendes kun på byniveau.</li>
           <li>På små øer uden bro regnes ambulancen med færge; her er akutlægehelikopteren og lokale førstehjælpere ofte hurtigere.</li>
           <li>Afstande er luftlinje gange en fast omvejsfaktor. Modellen antager, at nogen henter hjertestarteren, når den er hurtigere end ambulancen.</li>
-          <li>Befolkningen er bopælsbefolkning; steder med mange besøgende vises særskilt.</li>
+          <li>Befolkningen er bopælsbefolkning: hvor folk bor, ikke hvor de arbejder. Steder med mange besøgende vises særskilt.</li>
           <li>Et forslag er et søgeområde på ca. 100 × 100 m. Den endelige placering kræver lokal vurdering.</li>
         </ul>
       </div>

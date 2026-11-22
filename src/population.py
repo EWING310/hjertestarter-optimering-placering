@@ -6,9 +6,12 @@
    (res. 8, ~0,7 km²), så lokale artefakter i HRSL udlignes.
 3. Hver 100 m GHSL-celle deles i 4 delceller (50 m), så en 100 m dækningsradius
    rammer ~13 delceller (≈ cirklens areal) i stedet for 5 hele celler.
-4. Punkterne klippes til Danmark, aggregeres til et 50 m grid i UTM32,
-   tildeles kommune og kalibreres til Danmarks Statistiks seneste officielle
-   tal pr. kommune (FOLK1A: i alt og 60+).
+4. Punkterne klippes til Danmark og aggregeres til et 50 m grid i UTM32.
+5. Celler i industri-, havne- og jernbanearealer m.m. fjernes (src/landuse.py):
+   GHSL giver store haller beboere, fordi den følger bygningsvolumen.
+6. Cellerne tildeles kommune og kalibreres til Danmarks Statistiks seneste
+   officielle tal pr. kommune (FOLK1A: i alt og 60+), så de fjernede beboere
+   fordeles på kommunens øvrige celler.
 """
 
 from __future__ import annotations
@@ -22,7 +25,7 @@ import rasterio
 import requests
 from pyproj import Transformer
 
-from src import config
+from src import config, landuse
 
 ARCSEC = 3600
 H3_RES = 8
@@ -183,6 +186,9 @@ def build_demand_grid() -> pd.DataFrame:
     national_share = float(hrsl["pop60"].sum() / hrsl["pop"].sum())
     points["pop60"] = points["pop"] * points["h3"].map(share).fillna(national_share)
     grid = to_grid(points)
+    empty = landuse.uninhabited(grid, *landuse.load())
+    print(f"Celler i industri, havn, jernbane m.m. fjernet: {empty.sum():,} (pop {grid.loc[empty, 'pop'].sum():,.0f})")
+    grid = grid[~empty].reset_index(drop=True)
     grid["kommune"] = attach_municipality(grid)
     outside = grid["kommune"].isna()
     print(f"Grid-celler: {len(grid):,}; uden for DK fjernet: {outside.sum():,} (pop {grid.loc[outside, 'pop'].sum():,.0f})")

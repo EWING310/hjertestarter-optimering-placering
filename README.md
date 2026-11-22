@@ -14,32 +14,32 @@ Danmark opdelt efter EU's urbaniseringsgrad (DEGURBA, GHSL-SMOD 2025):
 
 | | By (bykerner) | Mindre by/forstad | Land |
 |---|---:|---:|---:|
-| Indbyggere | 1,88 mio. | 2,08 mio. | 2,08 mio. |
-| Andel af forventede hjertestop 2036 | 26,7 % | 36,8 % | 36,5 % |
-| Median afstand til døgntilgængelig hjertestarter | 135 m | 177 m | 392 m |
-| Bor ≤100 m fra en | 34,1 % | 22,5 % | 9,8 % |
-| Bor ≤500 m fra en | 99,2 % | 96,8 % | 57,1 % |
+| Indbyggere | 1,88 mio. | 2,04 mio. | 2,12 mio. |
+| Andel af forventede hjertestop 2036 | 26,8 % | 36,1 % | 37,1 % |
+| Median afstand til døgntilgængelig hjertestarter | 134 m | 178 m | 406 m |
+| Bor ≤100 m fra en | 34,2 % | 22,4 % | 9,4 % |
+| Bor ≤500 m fra en | 99,3 % | 97,0 % | 56,0 % |
 | Median responstid for ambulance (model) | 5,9 min | 6,2 min | 8,7 min |
-| Median tid til første stød | 5,2 min | 6,1 min | 8,9 min |
-| Overlevelse ved stødbar rytme (model) | 33,1 % | 31,3 % | 24,7 % |
+| Median tid til første stød | 5,2 min | 6,2 min | 9,0 min |
+| Overlevelse ved stødbar rytme (model) | 33,1 % | 31,3 % | 24,6 % |
 
-Beboere på landet venter i median 1,7 gange så længe på første stød som i bykernerne, og 43 % har ingen
+Beboere på landet venter i median 1,7 gange så længe på første stød som i bykernerne, og 44 % har ingen
 døgntilgængelig hjertestarter inden for 500 m.
 
 **Forslag til nye hjertestartere (fordelt efter hjertestop):**
 
 | Nye | By | Mindre by | Land | Ekstra overlevere pr. år (2036) | Beboere med kortere tid |
 |---:|---:|---:|---:|---:|---:|
-| 100 | 27 | 37 | 36 | 2,1 | 102.421 |
-| 500 | 134 | 184 | 182 | 7,0 | 369.126 |
-| 1.000 | 267 | 368 | 365 | 11,6 | 621.633 |
-| 2.000 | 535 | 735 | 730 | 18,6 | 1.018.015 |
+| 100 | 27 | 36 | 37 | 2,1 | 108.128 |
+| 500 | 134 | 181 | 185 | 7,2 | 386.266 |
+| 1.000 | 268 | 361 | 371 | 12,0 | 649.732 |
+| 2.000 | 536 | 722 | 742 | 19,3 | 1.062.186 |
 
-- **Fordelingen koster lidt:** samme optimering uden krav om fordeling giver 18,9 overlevere pr. år ved
-  2.000 nye, altså 1,6 % mere. Den første version af analysen talte kun beboere inden for 100 m og lagde 100 af de
+- **Fordelingen koster lidt:** samme optimering uden krav om fordeling giver 19,6 overlevere pr. år ved
+  2.000 nye, altså 1,9 % mere. Den første version af analysen talte kun beboere inden for 100 m og lagde 100 af de
   første 100 forslag i bykerner og kun 60 af 2.000 på landet.
-- **Billige opgraderinger:** 76 af de 2.000 forslag ligger inden for 75 m af en eksisterende hjertestarter,
-  der kun har åbningstid (48) eller står som utilgængelig (28). `forslag_goer_doegnaaben.csv` prioriterer 1.000 af dem.
+- **Billige opgraderinger:** 69 af de 2.000 forslag ligger inden for 75 m af en eksisterende hjertestarter,
+  der kun har åbningstid (42) eller står som utilgængelig (27). `forslag_goer_doegnaaben.csv` prioriterer 1.000 af dem.
 - **Offentlige steder:** 3.789 stationer, indkøbscentre, skoler og idrætsanlæg har ingen registreret
   hjertestarter inden for 100 m.
 - **Fremtid:** risikoen vokser mest frem mod 2036 i Horsens, Silkeborg, Brøndby, Høje-Taastrup og København (+15 %).
@@ -47,7 +47,10 @@ døgntilgængelig hjertestarter inden for 500 m.
 ## Metode
 
 1. **Befolkning.** GHSL GHS-POP 2025 (100 m) delt i 50 m-celler og kalibreret pr. kommune til Danmarks Statistik
-   FOLK1A (2026K4), i alt og 60+. Andelen 60+ lokalt kommer fra Meta HRSL 2020, udglattet pr. H3-celle (~0,7 km²).
+   FOLK1A (2026K4), i alt og 60+. GHSL fordeler beboerne efter bygningsvolumen og giver derfor store haller
+   beboere. Celler i industri-, havne-, jernbane- og militærområder og råstofgrave fra OpenStreetMap fjernes derfor
+   (378.000 beboere, 6 %), medmindre OSM har en boligbygning i cellen. Kalibreringen fordeler dem på kommunens
+   øvrige celler. Butiks- og erhvervszoner fjernes ikke, da de i bymidterne også dækker lejligheder. Andelen 60+ lokalt kommer fra Meta HRSL 2020, udglattet pr. H3-celle (~0,7 km²).
 2. **Risiko.** Ca. 5.000 hjertestop uden for hospital pr. år fordeles på beboerne; personer 60+ vægtes 7 gange
    højere. Risikoen i 2036 skaleres pr. kommune med DST's befolkningsfremskrivning (FRKM126).
 3. **Tid til første stød** for hver beboer = den korteste af
@@ -61,7 +64,7 @@ døgntilgængelig hjertestarter inden for 500 m.
    med lazy evaluation; målfunktionen er submodulær). Forslagene fordeles mellem by, mindre by og land efter
    klassernes andel af hjertestoppene i 2036, så ethvert top-N udsnit har den fordeling. Kandidater er beboede celler
    (én pr. 100 m-blok) og navngivne offentlige steder fra OpenStreetMap.
-6. **Følsomhed.** Skaleres responstiden med 0,8 eller 1,2, går 80–83 % af top 500-forslagene igen inden for 200 m.
+6. **Følsomhed.** Skaleres responstiden med 0,8 eller 1,2, går 78–82 % af top 500-forslagene igen inden for 200 m.
 
 ### Ambulancen
 
@@ -72,7 +75,7 @@ døgntilgængelig hjertestarter inden for 500 m.
 - **Køretid.** Vejnet og færgeruter fra OpenStreetMap (4,3 mio. knuder) med skiltet hastighed eller en standard
   pr. vejtype. Køretiden fra nærmeste base til hver beboet 50 m-celle findes med multi-source Dijkstra.
 - **Kalibrering.** Ambulancen holder ofte ikke på basen, så køretiden bruges kun som afstandsmål:
-  median responstid = 3,5 min + 0,63 · køretid, med log-normal spredning (σ = 0,36) fra gang til gang.
+  median responstid = 3,6 min + 0,61 · køretid, med log-normal spredning (σ = 0,36) fra gang til gang.
   Konstanterne er fittet, så modellen rammer regionernes målte andel af kørsel A fremme inden for 5, 10 og 15 min
   (Danske Regioner, 2025) og andelen inden for 15 min i hver af Region Syddanmarks 22 kommuner (2025–26).
   Afvigelsen er 3,8 %-point i gennemsnit (`output/ambulance_kalibrering.csv`). Samme formel gælder i by og på land.
@@ -89,7 +92,10 @@ døgntilgængelig hjertestarter inden for 500 m.
   og lokale førstehjælpere ofte hurtigere. Ca. 5.300 beboere har en modelleret responstid over 20 min.
 - Afstande er luftlinje gange en fast omvejsfaktor. Modellen antager, at nogen henter hjertestarteren, når den er
   hurtigere end ambulancen. Det gælder både tilskuere og Hjerteløbere.
-- Befolkningen er bopælsbefolkning. Steder med mange besøgende vises særskilt.
+- Befolkningen er bopælsbefolkning: hvor folk bor, ikke hvor de arbejder eller handler. Ca. 3/4 af hjertestop sker
+  i hjemmet. Steder med mange besøgende vises særskilt, men arbejdspladser i industriområder er ikke med.
+- Arealtyperne fra OpenStreetMap er frivilligt indtastede. Et nyt boligkvarter på en gammel industrigrund, som
+  stadig står som industri i OSM, mister sine beboere i modellen.
 - Registrets positioner og åbningstider er indberettet af ejerne og kan være forældede.
 - Et forslag er et søgeområde på ca. 100 × 100 m. Den endelige placering kræver lokal vurdering.
 
@@ -115,7 +121,7 @@ døgntilgængelig hjertestarter inden for 500 m.
 | Meta High Resolution Settlement Layer 2020 (HDX) | Andel 60+ |
 | Danmarks Statistik FOLK1A og FRKM126 | Befolkning 2026K4 og fremskrivning til 2036 |
 | Kontur Population 2023 | Maske mod nabolande |
-| OpenStreetMap (Geofabrik) | Værtssteder, offentlige steder, vejnet, færger og adresser til geokodning |
+| OpenStreetMap (Geofabrik) | Værtssteder, offentlige steder, industriområder, vejnet, færger og adresser til geokodning |
 | Regionerne, Præhospitalet, Præhospital Syd, BeredskabsInfo | Ambulancebaser (`data/raw/ambulancebaser.csv`) |
 | Danske Regioner, Region Syddanmark | Målte responstider pr. region og pr. syddansk kommune |
 | geoBoundaries ADM2 | Kommunegrænser |
@@ -132,7 +138,7 @@ uv venv --python 3.13 .venv && uv pip install --python .venv/bin/python -r requi
 .venv/bin/python -m pytest -q
 ```
 
-Kode i `src/`: `fetch_aeds`, `fetch_osm`, `population`, `projection`, `urbanization`, `ambulance`,
+Kode i `src/`: `fetch_aeds`, `fetch_osm`, `landuse`, `population`, `projection`, `urbanization`, `ambulance`,
 `road_network`, `ems_model`, `survival`, `fair_optimize`, `placement`, `analysis`, `web_export`.
 
 ## Licens
